@@ -1,12 +1,5 @@
 """
 Main flask script. Defines the '/recommendation/' route and parses input. 
-
-To start the flask server, run the following bash commands from the folder backend:
-    export FLASK_APP=main.py
-    export FLASK_ENV=development
-    flask run
-
-The server will automatically reload on any change to a file.
 """
 # TODO: more robust query evaluation
 from flask import Flask, request, jsonify
@@ -33,4 +26,8 @@ def recommendation():
 def _response_to_float_list(float_list: str) -> [float]:
     str_list = float_list[1:-1].split(",")
     return [float(x) for x in str_list]
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
 
