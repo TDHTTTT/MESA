@@ -7,7 +7,7 @@ def read_train_data(file_name):
 
     X = data[:, 0:-1]
     Y = data[:, -1]
-    print(Y)
+    # print(Y)
     return X, Y
 
 class MLClassifier:
