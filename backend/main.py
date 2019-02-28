@@ -28,6 +28,7 @@ def _response_to_float_list(float_list: str) -> [float]:
     return [float(x) for x in str_list]
 
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+if __name__ == '__main__':    
+    # Start the server
+    app.run(host='0.0.0.0', debug=True, port=5000)
 

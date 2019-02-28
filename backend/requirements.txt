@@ -1,3 +1,4 @@
 Flask==1.0.2
 Flask_RESTful==0.3.7
 numpy==1.15.2
+Scikit-learn==0.20.2
