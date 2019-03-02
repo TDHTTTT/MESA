@@ -24,7 +24,14 @@ Given the state, and additional context we compute a **state** vector of 5 eleme
 
 On top of that we provide a **context** vector based on interests and reactions on previous recommendations:
 
-[sport, mindfulness, events, weather, activity(*)]
+[time_of_day, sport, mindfulness, events, weather, activity(*)]
+
+time_of_day = Morning, Afternoon, Night
+sport = 0.0-1.0
+mindfulness = 0.0-1.0
+events=0.0-1.0
+weather=Good/Bad???
+activity=Low/High???
 
 (*) are we going to use this?
 
