@@ -2,7 +2,7 @@
 
 ## Questions:
 
-#### State
+### State
 On a scale from 1-5, how much do you agree with the following statements:
 1. I feel sad
 2. I feel lonely
@@ -10,7 +10,7 @@ On a scale from 1-5, how much do you agree with the following statements:
 4. I feel anxious
 5. I feel stressed
 
-#### Context?
+### Context?
 Possible, follow up questions based on the first 5:
 On a scale to 1-5, how much do you agree with the following statements:
 1. School work has been stressful
@@ -27,30 +27,27 @@ For example:
     "lonelyness": 0.0,
     "sleepyness": 0.0,
     "anxiousness": 0.0,
-    "stress": 0.0
+    "stress": 0.0,
+	"anger": 0.0
 }
 ```
 
 On top of that we provide a **context** JSON-object of key-value pairs based on interests and reactions on previous recommendations:
 
-time_of_day = Morning, Afternoon, Night
 sport = 0.0-1.0
 mindfulness = 0.0-1.0
 events=0.0-1.0
-weather=Good/Bad???
-activity=Low/High??? (*)
+activity=Low/High 
 
-(*) are we going to use this?
+(determined using the context of time of day having done 4000 steps when it is still morning means activity is probably high. while 4000 when it is night is probably low activity. Also I have kept activity low/high, because when it comes to our recommendation phase, I am not sure what the meaning will be of medium.)
 
 An example of the **context** JSON-object of key-value pairs can be:
 
 ```json
 {
-    "time_of_day": "Morning",
     "sport": 1.0,
     "mindfulness": 1.0,
-    "events": 1.0,
-    "weather": "Good",
+    "social": 1.0,
     "activity": "Low"
 }
 ```
@@ -66,15 +63,30 @@ When communicating this to the phone a JSON-object containing two key-value pair
 		"lonelyness": 0.0,
 		"sleepyness": 0.0,
 		"anxiousness": 0.0,
-		"stress": 0.0
+		"stress": 0.0,
+		"anger": 0.0
 	},
 	"context": {
-		"time_of_day": "Morning",
 		"sport": 1.0,
 		"mindfulness": 1.0,
 		"events": 1.0,
-		"weather": "Good",
 		"activity": "Low"
 	}
 }
 ```
+
+
+### Determining Context (or Personalization)
+
+Context is determined on the phone of the user using data collected from the user and the current environment. At the moment the following data sources are used to determine the context:
+
+1. time_of_day [Morning, Afternoon, Night]
+2. Weather [Bad, Medium, Good]
+3. previous answers.
+
+We select all previous answered feedback questions under the same (or similar) circumstances as now. Using that we compute the context JSON Object.
+
+### Definition
+
+**State**: Informs what is relevant (helps us search).
+**Context**: (or preference) is what helps us rank the search results in a way that makes sense for the user.
