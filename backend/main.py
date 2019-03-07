@@ -6,7 +6,8 @@ import os
 from flask import Flask, request, jsonify
 
 from recommendation.RecommendationResource import initModel, recommendTasks
-<<<<<<< HEAD
+from data_collection.scraper_scheduler import initScheduler
+from data_collection.web_scraper import scrapeArc, get_next_n_events
 import db
 
 
@@ -15,16 +16,6 @@ def create_app() -> Flask:
     Create and configure the app. When run using 'flask run' from the terminal, this 
     function will be called to get the Flask application instance.
     """
-=======
-from data_collection.scraper_scheduler import initScheduler
-from data_collection.web_scraper import scrapeARC, get_next_n_events
-
-
-app = Flask(__name__)
-app.before_first_request(initScheduler)
-app.before_first_request(initModel)
-app.before_first_request(scrapeARC)
->>>>>>> b48094f12c2ddb11057a46ac09dcfacd0e7af0c8
 
     app = Flask(__name__, instance_relative_config=True)
 
@@ -35,6 +26,8 @@ app.before_first_request(scrapeARC)
 
     # Register training function to run before handling requests
     app.before_first_request(initModel)
+    app.before_first_request(initScheduler)
+    app.before_first_request(scrapeArc)
 
     # Define the route we'll use to serve recommendation requests
     @app.route("/recommendation/", methods=['GET'])
@@ -46,19 +39,8 @@ app.before_first_request(scrapeARC)
             num_resources: int
             query: [float]
 
-<<<<<<< HEAD
         Returns:
             JSON list of floats representing ranked recommendations
-=======
-    # TODO here is just an example of getting the next assuming it is midnight 3 events for day 0 (Monday)
-    # We need to further implement this, with recommandation and ranking.
-    app.logger.debug(get_next_n_events(0, 0, 3))
-
-    # Ensure request args are correct format
-    num_resources = int(request.args.get("num_resources"))
-    query = _response_to_float_list(request.args.get("query"))
->>>>>>> b48094f12c2ddb11057a46ac09dcfacd0e7af0c8
-
         """
         # The following comment disables an unnecessary pylint error that the app.logger
         # doesn't have the method "info" at this time. It will at runtime.
