@@ -2,6 +2,6 @@
 export FLASK_APP=main.py            # Tell Flask that main.py is the app
 export FLASK_ENV=development        # Set Flask to run in dev mode
 
+flask init-db
 flask run --host 0.0.0.0 --port 5000
 # Set host and port to run off local server
-
