@@ -4,10 +4,14 @@ Main flask script. Defines the '/recommendation/' route and parses input.
 # TODO: more robust query evaluation
 from flask import Flask, request, jsonify
 from recommendation.RecommendationResource import initModel, recommendTasks
+from data_collection.scraper_scheduler import initScheduler
+from data_collection.web_scraper import scrapeARC, get_next_n_events
 
 
 app = Flask(__name__)
+app.before_first_request(initScheduler)
 app.before_first_request(initModel)
+app.before_first_request(scrapeARC)
 
 
 @app.route("/recommendation/", methods=['GET'])
@@ -24,6 +28,10 @@ def recommendation():
 
     """
     app.logger.debug("Request args: '{}'".format(request.args))
+
+    # TODO here is just an example of getting the next assuming it is midnight 3 events for day 0 (Monday)
+    # We need to further implement this, with recommandation and ranking.
+    app.logger.debug(get_next_n_events(0, 0, 3))
 
     # Ensure request args are correct format
     num_resources = int(request.args.get("num_resources"))

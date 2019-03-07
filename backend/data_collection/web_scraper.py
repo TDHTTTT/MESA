@@ -18,10 +18,10 @@ int_to_day = {
     3: "Thursday",
     4: "Friday",
     5: "Saturday",
-    6: "Sunday",
+    6: "Sunday"
 }
 
-def convert_time(time):
+def __convert_time(time):
     start, _ = time.split('-')
 
     if "am" in time:
@@ -29,8 +29,14 @@ def convert_time(time):
     else:
         return str(int(start.replace(":", "")) + 1200)
 
-def scrape_arc():
-    logger.log("scraping arc...")
+
+def scrapeARC():
+    """
+    Scrape data from the ARC website
+    """
+    global time_classes_list
+
+    logger.info("scraping arc...")
     page = requests.get(url_list["arc"]["url"])
     soup = BeautifulSoup(page.text, 'html.parser')
     schedule = soup.find("div", {"id": "tabs-7"})\
@@ -51,7 +57,7 @@ def scrape_arc():
 
         if len(info_class) == 4:
             sport = info_class[0]
-            time = convert_time(info_class[3])
+            time = __convert_time(info_class[3])
 
             # Get the right schedule for each day from the list
             day_classes = time_classes_list[int_to_day[i % 7]]
@@ -65,6 +71,25 @@ def scrape_arc():
 
             time_classes_list[int_to_day[i % 7]] = day_classes
 
-    logger.log("Finished scraping the arc...")
+    logger.info("Finished scraping the arc...")
 
-    return time_classes_list
+def get_next_n_events(day, time, N):
+    """
+    day: 0-6 (0: monday, 1: tuesday, etc.)
+    time: goes from 0-2400
+    N: integer, gives N classes back or all the upcoming classes today
+    """
+    count = 0
+    classes = dict()
+
+    today_classes = time_classes_list[int_to_day[day]]
+
+    for class_time in today_classes.keys():
+        if int(class_time) > time:
+            classes.update({class_time: today_classes[class_time]})
+            count += 1
+            if count == 5:
+                break 
+
+    return classes
+
