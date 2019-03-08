@@ -21,7 +21,7 @@ def create_app() -> Flask:
 
     # Set database file path
     app.config.from_mapping(
-        DATABASE=os.path.join("/home/matt/Desktop/winter_quarter_2019/cs125/project/MESA/backend", "flaskr.sqlite"),
+        DATABASE="./flaskr.sqlite"),
     )
 
     # Register initialization functions for machine learning and web scraping
