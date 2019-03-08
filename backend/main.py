@@ -24,7 +24,7 @@ def create_app() -> Flask:
         DATABASE=os.path.join("/home/matt/Desktop/winter_quarter_2019/cs125/project/MESA/backend", "flaskr.sqlite"),
     )
 
-    # Register training function to run before handling requests
+    # Register initialization functions for machine learning and web scraping
     app.before_first_request(initModel)
     app.before_first_request(initScheduler)
     app.before_first_request(scrapeArc)
