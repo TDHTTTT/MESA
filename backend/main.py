@@ -27,7 +27,7 @@ def create_app() -> Flask:
     # Register initialization functions for machine learning and web scraping
     app.before_first_request(initModel)
     app.before_first_request(initScheduler)
-    app.before_first_request(scrapeArc)
+    app.before_first_request(scrapeARC)
 
     # Define the route we'll use to serve recommendation requests
     @app.route("/recommendation/", methods=['GET'])
