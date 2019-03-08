@@ -7,7 +7,7 @@ from flask import Flask, request, jsonify
 
 from recommendation.RecommendationResource import initModel, recommendTasks
 from data_collection.scraper_scheduler import initScheduler
-from data_collection.web_scraper import scrapeArc, get_next_n_events
+from data_collection.web_scraper import scrapeARC, get_next_n_events
 import db
 
 
