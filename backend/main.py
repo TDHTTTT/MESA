@@ -21,7 +21,7 @@ def create_app() -> Flask:
 
     # Set database file path
     app.config.from_mapping(
-        DATABASE="./flaskr.sqlite"),
+        DATABASE="./flaskr.sqlite"
     )
 
     # Register initialization functions for machine learning and web scraping
