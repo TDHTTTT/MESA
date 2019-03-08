@@ -9,6 +9,7 @@ On a scale from 1-5, how much do you agree with the following statements:
 3. I feel sleepy
 4. I feel anxious
 5. I feel stressed
+6. I feel angry
 
 ### Context?
 Possible, follow up questions based on the first 5:
@@ -36,7 +37,7 @@ On top of that we provide a **context** JSON-object of key-value pairs based on 
 
 sport = 0.0-1.0
 mindfulness = 0.0-1.0
-events=0.0-1.0
+social=0.0-1.0
 activity=Low/High 
 
 (determined using the context of time of day having done 4000 steps when it is still morning means activity is probably high. while 4000 when it is night is probably low activity. Also I have kept activity low/high, because when it comes to our recommendation phase, I am not sure what the meaning will be of medium.)
@@ -69,7 +70,7 @@ When communicating this to the phone a JSON-object containing two key-value pair
 	"context": {
 		"sport": 1.0,
 		"mindfulness": 1.0,
-		"events": 1.0,
+		"social": 1.0,
 		"activity": "Low"
 	}
 }
