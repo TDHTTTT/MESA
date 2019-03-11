@@ -7,7 +7,8 @@ from flask import Flask, request, jsonify
 
 from recommendation.RecommendationResource import initModel, recommendTasks
 from data_collection.scraper_scheduler import initScheduler
-from data_collection.web_scraper import scrapeArc, get_next_n_events
+from data_collection.web_scraper import scrapeARC, get_next_n_events
+from error_handling import InvalidArguments
 import db
 
 
@@ -21,13 +22,20 @@ def create_app() -> Flask:
 
     # Set database file path
     app.config.from_mapping(
-        DATABASE=os.path.join("/home/matt/Desktop/winter_quarter_2019/cs125/project/MESA/backend", "flaskr.sqlite"),
+        DATABASE="./flaskr.sqlite",
     )
 
     # Register initialization functions for machine learning and web scraping
     app.before_first_request(initModel)
     app.before_first_request(initScheduler)
-    app.before_first_request(scrapeArc)
+    app.before_first_request(scrapeARC)
+
+    # Register error handler for bad arguments
+    @app.errorhandler(InvalidArguments)
+    def handle_invalid_arguments(error):
+        response = jsonify(error.to_dict())
+        response.status_code = error.status_code
+        return response
 
     # Define the route we'll use to serve recommendation requests
     @app.route("/recommendation/", methods=['GET'])
@@ -48,12 +56,22 @@ def create_app() -> Flask:
 
         app.logger.info("Request args: '{}'".format(request.args))
 
+        # If missing any arguments, abort with an error
+        if not all(key in request.args for key in ("num_resources", "state", "context")):
+            raise InvalidArguments(
+                "Missing an argument: Expects num_resources, state, and context", 
+                status_code=400
+            )
+
         # Ensure request args are correct format
         num_resources = int(request.args.get("num_resources"))
-        query = _response_to_float_list(request.args.get("query"))
+        state = _response_to_float_list(request.args.get("state"))
+        context = _response_to_float_list(request.args.get("context"))
 
         # Get recommendation list
-        responseRec = recommendTasks(num_resources=num_resources, query=query)
+        # TODO: When model is updated, update arguments here. Currently passing state to
+        #       the model as query
+        responseRec = recommendTasks(num_resources=num_resources, query=state)
         app.logger.info("Sending: '{}'".format(responseRec))
 
         # Return json of recommendation list
