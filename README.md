@@ -1,6 +1,19 @@
 # MESA
 
+## How to run
+
+1. Start the backend first, see the README.md of the backend.
+2. Update the config.js with the IP address of your server*.
+3. Start the application
+
+(*) This is needed the phone is not able to find the server.
+
 ## Questions:
+
+### Definition
+
+**State**: Informs what is relevant (helps us search).
+**Context**: (or *preference*) is what helps us rank the search results in a way that makes sense for the user.
 
 ### State
 On a scale from 1-5, how much do you agree with the following statements:
@@ -86,8 +99,3 @@ Context is determined on the phone of the user using data collected from the use
 3. previous answers.
 
 We select all previous answered feedback questions under the same (or similar) circumstances as now. Using that we compute the context JSON Object.
-
-### Definition
-
-**State**: Informs what is relevant (helps us search).
-**Context**: (or preference) is what helps us rank the search results in a way that makes sense for the user.

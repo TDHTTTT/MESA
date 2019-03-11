@@ -1,32 +1,43 @@
-# import argparse
-from flask_restful import Resource, reqparse
+"""Public interface to machine learning recommendation modules."""
 from recommendation import model
 import numpy as np
+import logging
 
-classifier = model.MLClassifier()
-X, Y = model.read_train_data("./data/data.csv")
-classifier.train(X,Y)
+logger = logging.getLogger(__name__)
+
+CLASSIFIER = None
 
 
-class RecommendationResource(Resource):
-    def get(self):
-        parser = reqparse.RequestParser()
+def initModel() -> model.MLClassifier:
+    """
+    Trains model based on training data.
+    If model has already been trained, do nothing.
+    """
+    global CLASSIFIER
+    if CLASSIFIER is None:
+        logger.debug("Training model...")
+        CLASSIFIER = model.MLClassifier()
+        X, Y = model.read_train_data("./data/data.csv")
+        CLASSIFIER.train(X,Y)
+        logger.debug("Model trained successfully.")
 
-        parser.add_argument("num_resources", type=int)
-        parser.add_argument('query')
-        # parser.add_argument('context')
 
-        # Parse argument
-        user_query = parser.parse_args()
-        num_resources = user_query['num_resources']
-        query = [float(x) for x in user_query['query'][1:-1].split(',')]
-        # context = [float(x) for x in user_query['context'][1:-1].split(',')]
+def recommendTasks(num_resources: int, query: [float]) -> [float]:
+    """
+    Gets recommendations from the trained model based on query input.
+    Train classifier if it hasn't been initialized yet. 
+    """
+    # Train classifier if None
+    global CLASSIFIER
+    if CLASSIFIER is None:
+        initModel()
         
-        # Find recommendations
-        out = classifier.predict(query)
+    # Find recommendations
+    out = CLASSIFIER.predict(query)
 
-        # Use context to sort recommendation
-        sorted_out = np.argsort(-out)
+    # Use context to sort recommendation
+    sorted_out = np.argsort(-out)
 
-        # Return sorted recommendations
-        return sorted_out[0:num_resources].tolist()
+    # Return sorted recommendations
+    return sorted_out[0:num_resources].tolist()
+

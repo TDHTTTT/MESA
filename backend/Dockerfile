@@ -3,5 +3,8 @@ ADD . /backend
 WORKDIR /backend
 RUN pip install -r requirements.txt
 
-CMD ["python", "main.py"]
+ENTRYPOINT ["./server_setup_entrypoint"]
+
 EXPOSE 5000
+EXPOSE 80
+
