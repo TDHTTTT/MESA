@@ -8,7 +8,7 @@ export class Task extends Component {
             <View style={styles.taskitem}>
                 <Text>Task: {this.props.name}</Text>
                 <Button
-				  // onPress={onPressLearnMore}
+				  onPress={emptyFunction}
 				  title="DONE"
 				  color="#ffd200"
 				  accessibilityLabel="Click here to complete the task."
@@ -17,6 +17,10 @@ export class Task extends Component {
         );
     }
 }
+
+function emptyFunction() {
+    return
+} 
 
 
 const styles = StyleSheet.create({
