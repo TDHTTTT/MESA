@@ -30,11 +30,6 @@
       "package": "me.sa",
       "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
       "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
-    },
-    "isDetached": true,
-    "detach": {
-      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.10.6-sdk32.0.0-83a07c97-312f-4bbf-8b19-5c609bc3c386.tar.gz"
-    },
-    "scheme": "exp66a3f64239fb48d3a43ab650746c5e11"
+    }
   }
 }
