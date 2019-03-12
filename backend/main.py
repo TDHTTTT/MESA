@@ -38,7 +38,7 @@ def create_app() -> Flask:
         return response
 
     # Define the route we'll use to serve recommendation requests
-    @app.route("/recommendation/", methods=['GET'])
+    @app.route("/recommendation/", methods=['POST'])
     def recommendation() -> "JSON response":
         """
         GET route that takes two parameters, hands them off to recommendation
@@ -55,23 +55,36 @@ def create_app() -> Flask:
         #pylint: disable=E1101
 
         app.logger.info("Request args: '{}'".format(request.args))
+        app.logger.info("Request data: '{}'".format(request.data))
 
         # If missing any arguments, abort with an error
-        if not all(key in request.args for key in ("num_resources", "state", "context")):
-            raise InvalidArguments(
-                "Missing an argument: Expects num_resources, state, and context", 
-                status_code=400
-            )
+        # if not all(key in request.data for key in ("num_resources", "state", "context")):
+        #     raise InvalidArguments(
+        #         "Missing an argument: Expects num_resources, state, and context", 
+        #         status_code=400
+        #     )
 
         # Ensure request args are correct format
-        num_resources = int(request.args.get("num_resources"))
-        state = _response_to_float_list(request.args.get("state"))
-        context = _response_to_float_list(request.args.get("context"))
+        if not request.is_json:
+            raise InvalidArguments(
+                    "Missing an argument: Expects json object containing: num_resources, state, and context",
+                    status_code=400
+                )
+        content = request.get_json()
+        num_resources = content["num_resources"]
+        app.logger.info("Number of Resources: {}".format(num_resources))
+
+        state = content["state"]
+        app.logger.info("State: {}".format(state))
+
+        context = content["context"]
+        app.logger.info("Context: {}".format(context))
+
 
         # Get recommendation list
         # TODO: When model is updated, update arguments here. Currently passing state to
         #       the model as query
-        responseRec = recommendTasks(num_resources=num_resources, query=state)
+        responseRec = recommendTasks(num_resources=num_resources, state=state, context=context)
         app.logger.info("Sending: '{}'".format(responseRec))
 
         # Return json of recommendation list
@@ -81,12 +94,6 @@ def create_app() -> Flask:
     db.init_app(app)
 
     return app
-
-
-def _response_to_float_list(float_list: str) -> [float]:
-    """Converts a comma-separated string of list of floats to [float]"""
-    str_list = float_list[1:-1].split(",")
-    return [float(x) for x in str_list]
 
 
 if __name__ == '__main__':    
