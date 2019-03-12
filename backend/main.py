@@ -60,14 +60,14 @@ def create_app() -> Flask:
     @app.route("/recommendation/", methods=['POST'])
     def recommendation() -> "JSON response":
         """
-        GET route that takes two parameters, hands them off to recommendation
-        algorithm, and sends back the result. 
+        POST route that takes JSON object and returns ranked recommendations.
         Params:
             num_resources: int
-            query: [float]
+            state: dict
+            context: dict
 
         Returns:
-            JSON list of floats representing ranked recommendations
+            JSON dict of ranked tasks
         """
         app.logger.info("Request data: '{}'".format(request.data))
 
