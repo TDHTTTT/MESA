@@ -9,6 +9,7 @@ CREATE TABLE tasks (
 
 CREATE TABLE events (
     id INTEGER PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL,
-    description TEXT NOT NULL
+    dayOfWeek TEXT NOT NULL,
+    name TEXT NOT NULL,
+    time INTEGER NOT NULL 
 );

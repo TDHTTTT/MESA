@@ -1,28 +1,31 @@
 """Public interface to machine learning recommendation modules."""
-from recommendation import model
+from recommendation.model import MLClassifier, read_train_data
+from recommendation.ranking import rank_tasks
 import numpy as np
 import logging
+from sklearn.feature_extraction import DictVectorizer
+
 
 logger = logging.getLogger(__name__)
 
 CLASSIFIER = None
 
 
-def initModel() -> model.MLClassifier:
+def initModel() -> MLClassifier:
     """
     Trains model based on training data.
     If model has already been trained, do nothing.
     """
     global CLASSIFIER
     if CLASSIFIER is None:
-        logger.debug("Training model...")
-        CLASSIFIER = model.MLClassifier()
-        X, Y = model.read_train_data("./data/data.csv")
+        logger.info("Training model...")
+        CLASSIFIER = MLClassifier()
+        X, Y = read_train_data("./data/tasks.json")
         CLASSIFIER.train(X,Y)
-        logger.debug("Model trained successfully.")
+        logger.info("Model trained successfully.")
 
 
-def recommendTasks(num_resources: int, query: [float]) -> [float]:
+def recommendTasks(num_resources: int, state: {}, context: {}) -> dict:
     """
     Gets recommendations from the trained model based on query input.
     Train classifier if it hasn't been initialized yet. 
@@ -31,13 +34,14 @@ def recommendTasks(num_resources: int, query: [float]) -> [float]:
     global CLASSIFIER
     if CLASSIFIER is None:
         initModel()
-        
+
     # Find recommendations
-    out = CLASSIFIER.predict(query)
+    probabilities_tasks = CLASSIFIER.predict(__extract_feature_vector(state))
+    print(probabilities_tasks)
+    
+    return rank_tasks(probabilities_tasks, context, num_resources)
 
-    # Use context to sort recommendation
-    sorted_out = np.argsort(-out)
 
-    # Return sorted recommendations
-    return sorted_out[0:num_resources].tolist()
 
+def __extract_feature_vector(input):
+    return np.array(list(input.values()))

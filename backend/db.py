@@ -2,10 +2,10 @@
 import sqlite3
 
 import click
-from flask import current_app, g
+from flask import current_app, g, Flask
 from flask.cli import with_appcontext
 
-def get_db():
+def get_db() -> sqlite3.Connection:
     """Returns a configured connection to the database"""
     if 'db' not in g:
         print(current_app.config["DATABASE"])
@@ -41,7 +41,7 @@ def init_db_command():
     click.echo("Initialized the database")
 
 
-def init_app(app: "Flask"):
+def db_init_app(app: Flask):
     # Register the database shutdown function
     app.teardown_appcontext(close_db)
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
 import { CONFIG } from './config';
 import { Task } from './task';
-
+import { personalModel } from './personal_model';
 
 export class TaskList extends Component {
     constructor(props) {
@@ -19,41 +19,36 @@ export class TaskList extends Component {
         // Needs to be the IP of your device.
         const url = CONFIG.server_url + "/recommendation/";
 
-        params = {
-            query: [1, 0, 1, 0],
+        body = {
+            state: personalModel.getState(),
+            context: personalModel.getContext(),
             num_resources: 3
         }
 
-        url_w_params = url + "?" + getQueryString(params)
-        console.log(url_w_params);
         const init_options = {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify(body)
         };
 
-        fetch(url_w_params, init_options)
+        fetch(url, init_options)
             .then((resp) => resp.json())
             .then(data => {
-                // TODO actually set the right data, currently the server returns dummy data...
                 console.log(data)
-                test_data = {
-                    task1: { name: "Workout" },
-                    task2: { name: "Mindfulness" },
-                    task3: { name: "Get your shit together..." }
-                }
-                this.setState(test_data);
+                this.setState(data);
             })
             .catch(error => {
+                console.log("Catch: Error in fetching data from server...")
                 console.log(error)
                 fail_data = {
                     task1: { name: "Failure to load tasks..." },
                     task2: { name: "Failure to load tasks..." },
                     task3: { name: "Failure to load tasks..." }
                 }
-                this.setState(test_data);
+                this.setState(fail_data);
             });
     }
 

@@ -2,14 +2,34 @@
 Main flask script. Defines the '/recommendation/' route and parses input. 
 """
 import os
+from logging.config import dictConfig
 
 from flask import Flask, request, jsonify
 
 from recommendation.RecommendationResource import initModel, recommendTasks
 from data_collection.scraper_scheduler import initScheduler
-from data_collection.web_scraper import scrapeARC, get_next_n_events
+from data_collection.web_scraper import arcDataToDb, get_next_n_events
+from error_handling import InvalidArguments
 import db
 
+# Configure logging
+dictConfig({
+    "version": 1,
+    "formatters": {"default": {
+        "format": "%(module)s: %(message)s",
+    }},
+    "handlers": {"wsgi": {
+        "class": "logging.StreamHandler",
+        "stream": "ext://flask.logging.wsgi_errors_stream",
+        "formatter": "default",
+    }},
+    "root": {
+        "level": "INFO",
+        "handlers": ["wsgi"],
+    },
+    # Allows loggers in submodules to run
+    "disable_existing_loggers": False,
+})
 
 def create_app() -> Flask:
     """
@@ -21,54 +41,73 @@ def create_app() -> Flask:
 
     # Set database file path
     app.config.from_mapping(
-        DATABASE="./flaskr.sqlite"
+        DATABASE="./flaskr.sqlite",
     )
 
     # Register initialization functions for machine learning and web scraping
     app.before_first_request(initModel)
     app.before_first_request(initScheduler)
-    app.before_first_request(scrapeARC)
+    app.before_first_request(arcDataToDb)
+
+    # Register error handler for bad arguments
+    @app.errorhandler(InvalidArguments)
+    def handle_invalid_arguments(error):
+        response = jsonify(error.to_dict())
+        response.status_code = error.status_code
+        return response
 
     # Define the route we'll use to serve recommendation requests
-    @app.route("/recommendation/", methods=['GET'])
+    @app.route("/recommendation/", methods=['POST'])
     def recommendation() -> "JSON response":
         """
-        GET route that takes two parameters, hands them off to recommendation
-        algorithm, and sends back the result. 
+        POST route that takes JSON object and returns ranked recommendations.
         Params:
             num_resources: int
-            query: [float]
+            state: dict
+            context: dict
 
         Returns:
-            JSON list of floats representing ranked recommendations
+            JSON dict of ranked tasks
         """
-        # The following comment disables an unnecessary pylint error that the app.logger
-        # doesn't have the method "info" at this time. It will at runtime.
-        #pylint: disable=E1101
+        app.logger.info("Request data: '{}'".format(request.data))
 
-        app.logger.info("Request args: '{}'".format(request.args))
+        # Ensure request data are in JSON format
+        if not request.is_json:
+            raise InvalidArguments(
+                    "Request data is not in JSON format",
+                    status_code=400
+                )
 
-        # Ensure request args are correct format
-        num_resources = int(request.args.get("num_resources"))
-        query = _response_to_float_list(request.args.get("query"))
+        content = request.get_json()
+
+        # If missing any arguments, abort with an error
+        if not all(key in content for key in ("num_resources", "state", "context")):
+            raise InvalidArguments(
+                "Missing an argument: Expects num_resources, state, and context", 
+                status_code=400
+            )
+
+        # Log request data
+        num_resources = content["num_resources"]
+        app.logger.info("Number of Resources: {}".format(num_resources))
+
+        state = content["state"]
+        app.logger.info("State: {}".format(state))
+
+        context = content["context"]
+        app.logger.info("Context: {}".format(context))
 
         # Get recommendation list
-        responseRec = recommendTasks(num_resources=num_resources, query=query)
+        responseRec = recommendTasks(num_resources=num_resources, state=state, context=context)
         app.logger.info("Sending: '{}'".format(responseRec))
 
         # Return json of recommendation list
         return jsonify(responseRec)
 
     # Register database functions
-    db.init_app(app)
+    db.db_init_app(app)
 
     return app
-
-
-def _response_to_float_list(float_list: str) -> [float]:
-    """Converts a comma-separated string of list of floats to [float]"""
-    str_list = float_list[1:-1].split(",")
-    return [float(x) for x in str_list]
 
 
 if __name__ == '__main__':    

@@ -1,6 +1,80 @@
 {
-    "0": "Go for a walk.",
-    "1": "Meditate.",
-    "2": "Go to the gym.",
-    "3": "Go to an event"
+    "yoga": {
+        "title": "Yoga - Empty your mind",
+        "description": "Go do some Yoga exercises to empty your mind!",
+        "labels": [
+            "workout",
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 4.0,
+                "anxiousness": 4.0,
+                "stress": 5.0,
+                "anger": 3
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 3.0,
+                "anxiousness": 5.0,
+                "stress": 4.0,
+                "anger": 5.0
+            }
+        ]
+    },
+    "Running": {
+        "title": "Go for a run!",
+        "description": "Take your running shoes out of the closest and go for a run!",
+        "labels": [
+            "workout",
+            "social"
+        ],
+        "states": [
+            {
+                "sadness": 3.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 0.0,
+                "stress": 5.0,
+                "anger": 3.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 4.0,
+                "anxiousness": 5.0,
+                "stress": 3.0,
+                "anger": 0.0
+            }
+        ]
+    },
+    "Go to event": {
+        "title": "Go to event!",
+        "description": "",
+        "labels": [
+            "workout",
+            "social"
+        ],
+        "states": [
+            {
+                "sadness": 3.0,
+                "lonelyness": 5.0,
+                "sleepyness": 0.0,
+                "anxiousness": 0.0,
+                "stress": 1.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 5.0,
+                "lonelyness": 5.0,
+                "sleepyness": 0.0,
+                "anxiousness": 0.0,
+                "stress": 0.0,
+                "anger": 0.0
+            }
+        ]
+    }
 }

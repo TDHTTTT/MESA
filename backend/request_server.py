@@ -2,9 +2,32 @@
 import requests, json
 
 url = "http://127.0.0.1:5000/recommendation/"
-query="query=[1, 0, 1, 0]&num_resources=3"
+num_resources = 3
+
+state = {
+    "sadness": 0.0,
+    "lonelyness": 0.0,
+    "sleepyness": 0.0,
+    "anxiousness": 0.0,
+    "stress": 0.0,
+    "anger": 0.0
+}
+
+context = {
+    "sport": 1.0,
+    "mindfulness": 1.0,
+    "social": 1.0
+}
+
+body = {
+    "num_resources": num_resources,
+    "state": state,
+    "context": context
+}
+
 
 if __name__ == "__main__":
-    r = requests.get(url, query)
-    print(r.json())
-
+    r = requests.post(url, json=body)
+    print(r.status_code)
+    if r.status_code is not "200":
+        print(r.text)

@@ -2,8 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 from collections import OrderedDict
 import logging
+from db import get_db
 
 logger = logging.getLogger(__name__)
+
+time_classes_list = None
 
 url_list = {
     "arc": {
@@ -21,6 +24,15 @@ int_to_day = {
     6: "Sunday"
 }
 
+db_insert_query = """INSERT INTO events (
+    dayOfWeek,
+    name,
+    time)
+VALUES (
+    ?,
+    ?,
+    ?);"""
+
 def __convert_time(time):
     start, _ = time.split('-')
 
@@ -36,7 +48,7 @@ def scrapeARC():
     """
     global time_classes_list
 
-    logger.info("scraping arc...")
+    logger.info("Scraping arc...")
     page = requests.get(url_list["arc"]["url"])
     soup = BeautifulSoup(page.text, 'html.parser')
     schedule = soup.find("div", {"id": "tabs-7"})\
@@ -72,6 +84,22 @@ def scrapeARC():
             time_classes_list[int_to_day[i % 7]] = day_classes
 
     logger.info("Finished scraping the arc...")
+
+
+def arcDataToDb():
+    """Insert scraped events into database"""
+    global time_classes_list
+    if time_classes_list is None:
+        scrapeARC()
+
+    g = get_db()
+    cursor = g.cursor()
+
+    for day, events in time_classes_list.items():
+        for time, events in events.items():
+            for name in events:
+                cursor.execute(db_insert_query, (day, name, time))
+
 
 def get_next_n_events(day, time, N):
     """
