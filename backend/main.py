@@ -105,7 +105,7 @@ def create_app() -> Flask:
         return jsonify(responseRec)
 
     # Register database functions
-    db.init_app(app)
+    db.db_init_app(app)
 
     return app
 
