@@ -1,4 +1,4 @@
-def rank_tasks(probabilites, context, number_of_tasks):
+def rank_tasks(probabilites, context, number_of_tasks) -> dict:
     # output needs be of the form of {"tasksN": {"name": "", ...}
     tasks = {}
     for i, key in enumerate(sorted(probabilites, key=probabilites.get, reverse=True)):

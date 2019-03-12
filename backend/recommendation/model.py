@@ -1,7 +1,9 @@
 from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import json
+import logging 
 
+logger = logging.getLogger(__name__)
 
 def __get_training_data(data):
     return np.array([
@@ -27,8 +29,8 @@ def read_train_data(file_name):
 
     X = np.asarray(X)
     Y = np.asarray(Y)
-    print("Training data X: {}".format(X))
-    print("Training data Y: {}".format(Y))
+    logger.info("Training data X: \n{}".format(X))
+    logger.info("Training data Y: \n{}".format(Y))
 
     return X, Y
 
@@ -44,8 +46,8 @@ class MLClassifier:
         tasks = self.classifier.classes_
         probs = self.classifier.predict_proba(arr.reshape(1, -1))[0]
 
-        print(tasks)
-        print(probs)
+        logger.info("Tasks: {}".format(tasks))
+        logger.info("Probs: {}".format(probs))
         
         task_prob_dict = {}
         for task, prob in zip(tasks, probs):

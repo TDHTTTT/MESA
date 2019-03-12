@@ -2,6 +2,7 @@
 Main flask script. Defines the '/recommendation/' route and parses input. 
 """
 import os
+from logging.config import dictConfig
 
 from flask import Flask, request, jsonify
 
@@ -11,6 +12,24 @@ from data_collection.web_scraper import arcDataToDb, get_next_n_events
 from error_handling import InvalidArguments
 import db
 
+# Configure logging
+dictConfig({
+    "version": 1,
+    "formatters": {"default": {
+        "format": "%(module)s: %(message)s",
+    }},
+    "handlers": {"wsgi": {
+        "class": "logging.StreamHandler",
+        "stream": "ext://flask.logging.wsgi_errors_stream",
+        "formatter": "default",
+    }},
+    "root": {
+        "level": "INFO",
+        "handlers": ["wsgi"],
+    },
+    # Allows loggers in submodules to run
+    "disable_existing_loggers": False,
+})
 
 def create_app() -> Flask:
     """
@@ -50,27 +69,25 @@ def create_app() -> Flask:
         Returns:
             JSON list of floats representing ranked recommendations
         """
-        # The following comment disables an unnecessary pylint error that the app.logger
-        # doesn't have the method "info" at this time. It will at runtime.
-        #pylint: disable=E1101
-
-        app.logger.info("Request args: '{}'".format(request.args))
         app.logger.info("Request data: '{}'".format(request.data))
 
-        # If missing any arguments, abort with an error
-        # if not all(key in request.data for key in ("num_resources", "state", "context")):
-        #     raise InvalidArguments(
-        #         "Missing an argument: Expects num_resources, state, and context", 
-        #         status_code=400
-        #     )
-
-        # Ensure request args are correct format
+        # Ensure request data are in JSON format
         if not request.is_json:
             raise InvalidArguments(
-                    "Missing an argument: Expects json object containing: num_resources, state, and context",
+                    "Request data is not in JSON format",
                     status_code=400
                 )
+
         content = request.get_json()
+
+        # If missing any arguments, abort with an error
+        if not all(key in content for key in ("num_resources", "state", "context")):
+            raise InvalidArguments(
+                "Missing an argument: Expects num_resources, state, and context", 
+                status_code=400
+            )
+
+        # Log request data
         num_resources = content["num_resources"]
         app.logger.info("Number of Resources: {}".format(num_resources))
 
@@ -80,10 +97,7 @@ def create_app() -> Flask:
         context = content["context"]
         app.logger.info("Context: {}".format(context))
 
-
         # Get recommendation list
-        # TODO: When model is updated, update arguments here. Currently passing state to
-        #       the model as query
         responseRec = recommendTasks(num_resources=num_resources, state=state, context=context)
         app.logger.info("Sending: '{}'".format(responseRec))
 

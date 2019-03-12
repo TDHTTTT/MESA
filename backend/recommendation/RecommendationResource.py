@@ -18,14 +18,14 @@ def initModel() -> MLClassifier:
     """
     global CLASSIFIER
     if CLASSIFIER is None:
-        logger.debug("Training model...")
+        logger.info("Training model...")
         CLASSIFIER = MLClassifier()
         X, Y = read_train_data("./data/tasks.json")
         CLASSIFIER.train(X,Y)
-        logger.debug("Model trained successfully.")
+        logger.info("Model trained successfully.")
 
 
-def recommendTasks(num_resources: int, state: {}, context: {}) -> [float]:
+def recommendTasks(num_resources: int, state: {}, context: {}) -> dict:
     """
     Gets recommendations from the trained model based on query input.
     Train classifier if it hasn't been initialized yet. 

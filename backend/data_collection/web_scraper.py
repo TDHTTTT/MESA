@@ -48,7 +48,7 @@ def scrapeARC():
     """
     global time_classes_list
 
-    logger.info("scraping arc...")
+    logger.info("Scraping arc...")
     page = requests.get(url_list["arc"]["url"])
     soup = BeautifulSoup(page.text, 'html.parser')
     schedule = soup.find("div", {"id": "tabs-7"})\
