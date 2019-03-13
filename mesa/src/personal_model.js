@@ -10,7 +10,7 @@ class PersonalModel {
         }
         
         this.context = {
-            sport: 1.0,
+            workout: 1.0,
             mindfulness: 1.0,
             social: 1.0
         }
