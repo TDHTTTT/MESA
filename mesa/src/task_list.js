@@ -37,8 +37,12 @@ export class TaskList extends Component {
         fetch(url, init_options)
             .then((resp) => resp.json())
             .then(data => {
-                console.log(data)
-                this.setState(data);
+                new_state = {
+                    task1: data[0],
+                    task2: data[1],
+                    task3: data[2]
+                }
+                this.setState(new_state);
             })
             .catch(error => {
                 console.log("Catch: Error in fetching data from server...")

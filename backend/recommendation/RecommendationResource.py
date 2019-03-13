@@ -4,7 +4,7 @@ from recommendation.ranking import rank_tasks
 import numpy as np
 import logging
 from sklearn.feature_extraction import DictVectorizer
-
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +24,17 @@ def initModel() -> MLClassifier:
         CLASSIFIER.train(X,Y)
         logger.info("Model trained successfully.")
 
+def _readtContext() -> dict:
+    """
+    Gets the tasks' corresponding context labels for ranking
+    """
+    tContext = {}
+    with open("./data/tasks.json") as f:
+        data = json.load(f)
+        for k,v in data.items():
+            tContext[k] = (v['description'], v['labels'])
+    return tContext
+    
 
 def recommendTasks(num_resources: int, state: {}, context: {}) -> dict:
     """
@@ -37,9 +48,9 @@ def recommendTasks(num_resources: int, state: {}, context: {}) -> dict:
 
     # Find recommendations
     probabilities_tasks = CLASSIFIER.predict(__extract_feature_vector(state))
-    print(probabilities_tasks)
     
-    return rank_tasks(probabilities_tasks, context, num_resources)
+    tContext = _readtContext()
+    return rank_tasks(probabilities_tasks, context, num_resources, tContext)
 
 
 
