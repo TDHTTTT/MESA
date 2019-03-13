@@ -17,7 +17,7 @@ def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
     tasks = sorted(tasks.values(), key=lambda x:x['prob'], reverse=True)
     logger.info(str(tasks))
     # before returning truncate to number_of_tasks?
-    return _dropProb(tasks)
+    return _dropProb(tasks)[:number_of_tasks]
 
 def _dropProb(tasks):
     res = []
@@ -29,7 +29,7 @@ def _personalize(key, probability, context, tContext) -> float:
     """
     Calculate the personalized probability for a single task
     """
-    weight = 0
+    weight = 1
     for c in tContext[key][1]:
         weight += context[c]
     return _sigmoid(weight*probability) - 0.5
