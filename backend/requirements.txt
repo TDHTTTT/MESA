@@ -2,5 +2,5 @@ Flask==1.0.2
 numpy==1.15.2
 Scikit-learn==0.20.2
 beautifulsoup4==4.6.1
-requests==2.19.1
+requests==2.20.0
 APScheduler==3.5.3
