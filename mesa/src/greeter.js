@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Button, Slider } from 'react-native';
-import { personalModel } from './personal_model';
+import { ActivityComponent } from './activity_component';
 import Modal from "react-native-modal";
 
 export class Greeter extends Component {
@@ -44,6 +44,7 @@ export class Greeter extends Component {
                   <Text style={styles.pYellow}>How are you feeling?</Text>
               </TouchableOpacity>
       				<Text style={styles.p}>The weather looks WEATHER today.</Text>
+              <ActivityComponent style={styles.p} />
       				<Text style={styles.p}>You have N tasks left to do today.</Text>
       				<Text style={styles.p}>There are M events coming up.</Text>
       				<Text style={[styles.p, {marginTop: "auto"}]}>TODAY : March 11, 2019</Text>

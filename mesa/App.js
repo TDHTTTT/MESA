@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Navigator } from 'react-native';
 import { Header, Card } from 'react-native-elements';
 import { TaskList } from './src/task_list';
-import { personalModel } from './src/personal_model';
 import { Greeter } from './src/greeter';
 
 export default class App extends React.Component {
