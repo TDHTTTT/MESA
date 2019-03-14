@@ -9,6 +9,7 @@ from flask import Flask, request, jsonify
 from recommendation.RecommendationResource import initModel, recommendTasks
 from data_collection.scraper_scheduler import initScheduler
 from data_collection.web_scraper import arcDataToDb, get_next_n_events
+from data_collection.weather_conditions import get_status, is_okay_to_go_outside
 from error_handling import InvalidArguments
 import db
 
@@ -58,7 +59,7 @@ def create_app() -> Flask:
 
     # Define the route we'll use to serve recommendation requests
     @app.route("/recommendation/", methods=['POST'])
-    def recommendation() -> "JSON response":
+    def recommendation() -> "JSON List Response":
         """
         POST route that takes JSON object and returns ranked recommendations.
         Params:
@@ -103,6 +104,27 @@ def create_app() -> Flask:
 
         # Return json of recommendation list
         return jsonify(responseRec)
+
+    
+    # Define weather API routes
+    @app.route("/weather/", methods=["GET"])
+    def weather() -> "JSON String Response":
+        """
+        GET route returning weather status.
+        Returns short string e.g. "Clear" or "Rain" describing the weather now.
+        """
+        app.logger.info("Serving request for current weather status.")
+        return jsonify(get_status())
+
+    @app.route("/outside/", methods=["GET"])
+    def outside() -> "JSON Boolean Response":
+        """
+        GET route returning whether it's okay to go outside for an activity.
+        Returns boolean. 
+        """
+        app.logger.info("Serving request for whether it's okay to go outside.")
+        return jsonify(is_okay_to_go_outside())
+    
 
     # Register database functions
     db.db_init_app(app)
