@@ -8,14 +8,22 @@ export class TaskList extends Component {
     constructor(props) {
         super(props);
 
+        this.taskListRef = React.createRef();
+
         this.state = {
             task1: { name: "task_1" },
             task2: { name: "task_2" },
             task3: { name: "task_3" }
         };
+
+        personalModel.register(this);
     }
 
-    componentDidMount() {
+    update() {
+        this.fetchDataFromServer();
+    }
+
+    fetchDataFromServer(){
         // Needs to be the IP of your device.
         const url = CONFIG.server_url + "/recommendation/";
 
@@ -37,6 +45,7 @@ export class TaskList extends Component {
         fetch(url, init_options)
             .then((resp) => resp.json())
             .then(data => {
+                console.log(data)
                 new_state = {
                     task1: data[0],
                     task2: data[1],
@@ -56,9 +65,13 @@ export class TaskList extends Component {
             });
     }
 
+    componentDidMount() {
+        this.fetchDataFromServer()
+    }
+
     render() {
         return (
-            <ScrollView style={{marginBottom: 60}}> 
+            <ScrollView style={{ marginBottom: 60 }} ref={this.taskListRef} > 
                 <Task name={this.state.task1.name} description={this.state.task1.description} />
                 <Task name={this.state.task2.name} description={this.state.task2.description} />
                 <Task name={this.state.task3.name} description={this.state.task3.description} />

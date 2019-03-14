@@ -9,22 +9,22 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Header
-		leftComponent={{ icon: 'menu', color: '#fff' }}
-		centerComponent={{ text: 'MESA', style: { color: '#fff' } }}
-		rightComponent={{ icon: 'home', color: '#fff' }}
-		containerStyle={{
-			backgroundColor: "transparent",
-		}}
-		/>
-		<Greeter/>
-        <Card title="n Tasks" containerStyle={{
-			flex: 0.7,
-			marginBottom: 30,
-		}}>
-		{
-			<TaskList/>
-		}
-		</Card>
+					leftComponent={{ icon: 'menu', color: '#fff' }}
+					centerComponent={{ text: 'MESA', style: { color: '#fff' } }}
+					rightComponent={{ icon: 'home', color: '#fff' }}
+					containerStyle={{
+						backgroundColor: "transparent",
+					}}
+				/>
+				<Greeter/>
+				<Card title="n Tasks" containerStyle={{
+					flex: 0.7,
+					marginBottom: 30,
+				}}>
+				{
+					<TaskList/>
+				}
+				</Card>
       </View>
     );
   }
