@@ -2,4 +2,4 @@ __pycache__/
 *.swp
 *.sqlite
 *.vscode/
-
+*.pyc
