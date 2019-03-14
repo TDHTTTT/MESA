@@ -43,7 +43,7 @@ export class Task extends Component {
     viewDescription() {
       Alert.alert(
         this.props.name,
-        this.props.description, // same issue as above. How to get a task's description?
+        this.props.description,
         [
           {
             text: 'Cancel',
