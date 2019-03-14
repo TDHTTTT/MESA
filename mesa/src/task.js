@@ -43,7 +43,7 @@ export class Task extends Component {
     viewDescription() {
       Alert.alert(
         this.props.name,
-        "task.description", // same issue as above. How to get a task's description?
+        this.props.description,
         [
           {
             text: 'Cancel',
@@ -61,7 +61,7 @@ export class Task extends Component {
           <View style={styles.taskitem}>
             <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
               <TouchableOpacity onPress={ () => { this.viewDescription() } }>
-                <Text>Task: {this.props.name}</Text>
+                <Text>{this.props.name}</Text>
               </TouchableOpacity>
             </View>
             <View style={{flex: 1}}>
