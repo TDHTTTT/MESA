@@ -1,29 +1,19 @@
-
+import { LEVELS } from './levels';
 import { Pedometer } from 'expo';
-import React, { Component } from 'react';
-import { Text } from 'react-native';
 
-const LEVELS = {
-    UNKNOWN: "NA",
-    LOW: "low",
-    MEDIUM: "medium",
-    HIGH: "good"
-}
+class ActivityLevel {
+    constructor() {
+        this.activityLevel = LEVELS.UNKNOWN;
 
-export class ActivityLevel extends Component{
-    constructor(props) {
-        super(props)
-        this.state = {
-            activityLevel: LEVELS.UNKNOWN
-        };
-
-        if ( Pedometer.isAvailableAsync() ) {
+        if (Pedometer.isAvailableAsync()) {
             console.log("Pedometer is available!!");
             this.updateActivityLevel();
         }
         else {
             console.log("Pedometer is not available...");
         }
+
+        this.updateActivityLevel()
     }
 
     async updateActivityLevel() {
@@ -38,25 +28,21 @@ export class ActivityLevel extends Component{
 
         if (step_count > 8000) {
             console.log("ActivityLevel is set too: " + LEVELS.HIGH);
-            this.setState({activityLevel: LEVELS.HIGH});
+            this.activityLevel = LEVELS.HIGH;
         }
-        else if (step_count > 4000){
+        else if (step_count > 4000) {
             console.log("ActivityLevel is set too: " + LEVELS.MEDIUM);
-            this.setState({ activityLevel: LEVELS.MEDIUM });
+            this.activityLevel = LEVELS.MEDIUM;
         }
         else {
             console.log("ActivityLevel is set too: " + LEVELS.LOW);
-            this.setState({ activityLevel: LEVELS.LOW });
+            this.activityLevel = LEVELS.LOW;
         }
     }
 
     getActivityLevel() {
         return this.activityLevel;
     }
-
-    render() {
-        return (
-            <Text style={this.props.style}>Your activity level is {this.state.activityLevel}. </Text>
-        )
-    }
 }
+
+export let activityLevel = new ActivityLevel();

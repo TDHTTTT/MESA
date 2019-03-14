@@ -1,3 +1,5 @@
+import { activityLevel } from './activity_level';
+
 class PersonalModel {
     constructor(){
         this.state = {
@@ -7,13 +9,13 @@ class PersonalModel {
             anxiousness: 0.0,
             stress: 0.0,
             anger: 0.0
-        }
+        };
         
         this.context = {
             workout: 1.0,
             mindfulness: 1.0,
             social: 1.0
-        }
+        };
     }
 
     updateState(mc_answers) {
@@ -26,6 +28,14 @@ class PersonalModel {
         // Here we update the context
         // What are the inputs?
         // How do we calculate the context?
+
+        // Get act activity level of user.
+        activityLevel.updateActivityLevel().then(
+            () => {
+                let activity = activityLevel.getActivityLevel();
+                console.log("Personal Model: Activity level of the user is: " + activity);
+            });
+        
     }
 
     getState() {
