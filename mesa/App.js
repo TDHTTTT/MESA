@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Navigator } from 'react-native';
 import { Header, Card } from 'react-native-elements'
 import { TaskList } from './src/task_list';
+import { ActivityLevel } from './src/user_activity';
 
 // const list = [
 //   {
@@ -30,6 +31,7 @@ export default class App extends React.Component {
 			<Text style={styles.h1}>Hello, NAME!</Text>
 			<Text style={styles.p}>How are you feeling?</Text>
 			<Text style={styles.p}>The weather looks WEATHER today.</Text>
+			<ActivityLevel style={styles.p}/>
 			<Text style={styles.p}>You have N tasks left to do today.</Text>
 			<Text style={styles.p}>There are M events coming up.</Text>
 			<Text style={[styles.p, {marginTop: "auto"}]}>TODAY : March 11, 2019</Text>
