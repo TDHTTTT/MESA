@@ -59,12 +59,9 @@ export class TaskList extends Component {
     render() {
         return (
             <ScrollView style={{marginBottom: 60}}> 
-                <Task name={this.state.task1.name} />
-                <Task name={this.state.task2.name} />
-                <Task name={this.state.task3.name} />
-                <Task name={this.state.task1.name} />
-                <Task name={this.state.task2.name} />
-                <Task name={this.state.task3.name} />
+                <Task name={this.state.task1.name} description={this.state.task1.description} />
+                <Task name={this.state.task2.name} description={this.state.task2.description} />
+                <Task name={this.state.task3.name} description={this.state.task3.description} />
             </ScrollView>
         );
     }
