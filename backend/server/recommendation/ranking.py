@@ -10,12 +10,17 @@ def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
         data = {
             "name": k,
             "description" : tContext[k][0],
+            "labels": tContext[k][1],
             "event_data" : {},
             "prob":  _personalize(k, v, context, tContext)
         }
         tasks[k] = data
     tasks = sorted(tasks.values(), key=lambda x:x['prob'], reverse=True)
     logger.info(str(tasks))
+    print("\n\n")
+    print(tasks)
+    print("\n\n")
+    
     # before returning truncate to number_of_tasks?
     return _dropProb(tasks)[:number_of_tasks]
 
