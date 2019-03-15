@@ -105,7 +105,6 @@ def create_app() -> Flask:
         # Return json of recommendation list
         return jsonify(responseRec)
 
-    
     # Define weather API routes
     @app.route("/weather/", methods=["GET"])
     def weather() -> "JSON String Response":
@@ -124,7 +123,6 @@ def create_app() -> Flask:
         """
         app.logger.info("Serving request for whether it's okay to go outside.")
         return jsonify(is_okay_to_go_outside())
-    
 
     # Register database functions
     db.db_init_app(app)

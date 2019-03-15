@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup
+import datetime
 import requests
 from collections import OrderedDict
 import logging
-from db import get_db
+from db import get_db, close_db
 
 logger = logging.getLogger(__name__)
 
@@ -86,6 +87,56 @@ def scrapeARC():
     logger.info("Finished scraping the arc...")
 
 
+def get_upcoming_events() -> list:
+    """
+    Get next 5 (or less if there's less today) upcoming events today.
+    Returned as a list of tuples in the form:
+        (database ID, day of week, name, time as string, time as Python datetime object)
+    """
+    g = get_db()
+    cursor = g.cursor()
+
+    now = datetime.datetime.today()
+    today_day = now.strftime("%A")
+
+    def four_digit_time_to_hour_min(time: int) -> (str, str):
+        t_str = str(time)
+        if len(t_str) == 3:
+            return "0" + t_str[0], t_str[1:]
+        elif len(t_str) == 4:
+            if t_str[0:2] == "24":
+                return "23", t_str[2:]
+            return t_str[0:2], t_str[2:]
+
+    def to_datetime(event: tuple) -> datetime.datetime:
+        """key to sort event list by"""
+        hour, minute = four_digit_time_to_hour_min(event[3])
+        return now.replace(hour=int(hour), minute=int(minute))
+
+    events_today = list()
+    for row in cursor.execute("SELECT * FROM events"):
+        # logger.warning(tuple(row))
+        if row["dayOfWeek"] == today_day:
+            time = to_datetime(row)
+            events_today.append(row[:4] + (time,))
+
+    # Filter out events happening after now
+    def now_or_later(event) -> bool:
+        return event[4] > now
+    events_today = list(filter(now_or_later, events_today))
+
+    # Sort events by time
+    events_today.sort(key=lambda x: x[4])
+
+    logger.debug("Events today after now sorted: " + repr(events_today))
+
+    close_db()
+    if len(events_today) > 5:
+        return events_today[:6]
+    else:
+        return events_today
+
+
 def arcDataToDb():
     """Insert scraped events into database"""
     global time_classes_list
@@ -99,6 +150,9 @@ def arcDataToDb():
         for time, events in events.items():
             for name in events:
                 cursor.execute(db_insert_query, (day, name, time))
+
+    g.commit() # Turns out you need this
+    close_db()
 
 
 def get_next_n_events(day, time, N):
