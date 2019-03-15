@@ -1,6 +1,3 @@
-import { activityLevel } from './activity_level';
-import { ComponentEventsObserver } from 'react-native-navigation/lib/dist/events/ComponentEventsObserver';
-
 class PersonalModel {
     constructor(){
         this.state = {
