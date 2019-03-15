@@ -1,5 +1,3 @@
-import { activityLevel } from './activity_level';
-
 class PersonalModel {
     constructor(){
         this.state = {
@@ -16,26 +14,43 @@ class PersonalModel {
             mindfulness: 1.0,
             social: 1.0
         };
+
+        this.dependencies = []
     }
 
-    updateState(mc_answers) {
+    __updateState(mc_answers) {
         // Here we update the state
-        // process mc_answers
-
+        this.state = {
+            sadness: mc_answers.sadnessRating,
+            lonelyness: mc_answers.lonelinessRating,
+            sleepyness: mc_answers.sleepynessRating,
+            anxiousness: mc_answers.anxiousnessRating,
+            stress: mc_answers.stressRating,
+            anger: mc_answers.angerRating
+        }
     }
 
-    updateContext() {
+    __updateContext(){
         // Here we update the context
         // What are the inputs?
         // How do we calculate the context?
-
         // Get act activity level of user.
-        activityLevel.updateActivityLevel().then(
-            () => {
-                let activity = activityLevel.getActivityLevel();
-                console.log("Personal Model: Activity level of the user is: " + activity);
-            });
-        
+
+        // activityLevel.updateActivityLevel().then(
+        //     () => {
+        //         let activity = activityLevel.getActivityLevel();
+        //         console.log("Personal Model: Activity level of the user is: " + activity);
+        //     });
+    }
+
+    updatePersonalModel(mc_answers) {
+        this.__updateState(mc_answers);
+        this.__updateContext();
+
+
+        this.dependencies.forEach(dep => {
+            dep.update()
+        })
     }
 
     getState() {
@@ -44,6 +59,10 @@ class PersonalModel {
 
     getContext() {
         return this.context;
+    }
+
+    register(dependency) {
+        this.dependencies.push(dependency)
     }
 }
 
