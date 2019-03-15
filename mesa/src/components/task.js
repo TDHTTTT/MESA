@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, Alert } from 'react-native';
-import { personalModel } from './personal_model';
 
 export class Task extends Component {
     completeTask() {

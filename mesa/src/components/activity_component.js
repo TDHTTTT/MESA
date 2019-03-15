@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { activityLevel } from './activity_level';
-import { LEVELS } from './levels';
+import { activityLevel } from '../personal_model/activity_level';
+import { LEVELS } from '../personal_model/levels';
 
 export class ActivityComponent extends Component{
     constructor(props) {

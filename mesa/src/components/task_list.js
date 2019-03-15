@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
-import { CONFIG } from './config';
+import { CONFIG } from '../config';
 import { Task } from './task';
-import { personalModel } from './personal_model';
+import { personalModel } from '../personal_model/personal_model';
 
 export class TaskList extends Component {
     constructor(props) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from "react-native-modal";
-import { personalModel } from './personal_model';
+import { personalModel } from '../personal_model/personal_model';
 import { Text, View, Button, Slider } from 'react-native';
 
 
