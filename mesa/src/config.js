@@ -1,3 +1,3 @@
 export const CONFIG = {
-    server_url: "http://192.168.0.2:5000"
+    server_url: "http://192.168.1.10:5000"
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Navigator } from 'react-native';
 import { Header, Card } from 'react-native-elements';
-import { TaskList } from './src/task_list';
-import { Greeter } from './src/greeter';
+import { TaskList } from './src/components/task_list';
+import { Greeter } from './src/components/greeter';
 
 export default class App extends React.Component {
 	render() {
