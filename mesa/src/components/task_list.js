@@ -43,7 +43,6 @@ export class TaskList extends Component {
         fetch(url, init_options)
             .then((resp) => resp.json())
             .then(data => {
-                console.log(data)
                 new_state = {
                     task1: data[0],
                     task2: data[1],
