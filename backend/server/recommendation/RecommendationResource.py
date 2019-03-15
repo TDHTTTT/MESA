@@ -1,6 +1,8 @@
 """Public interface to machine learning recommendation modules."""
 from recommendation.model import MLClassifier, read_train_data
 from recommendation.ranking import rank_tasks
+from recommendation.enrich_tasks import enrichTasks
+
 import numpy as np
 import logging
 from sklearn.feature_extraction import DictVectorizer
@@ -50,7 +52,8 @@ def recommendTasks(num_resources: int, state: {}, context: {}) -> dict:
     probabilities_tasks = CLASSIFIER.predict(__extract_feature_vector(state))
     
     tContext = _readtContext()
-    return rank_tasks(probabilities_tasks, context, num_resources, tContext)
+    ranked_tasks = rank_tasks(probabilities_tasks, context, num_resources, tContext)
+    return enrichTasks(ranked_tasks)
 
 
 
