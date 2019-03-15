@@ -49,7 +49,7 @@ export class MoodSurvey extends Component {
             <Modal isVisible={this.state.modalVisibilityToggle} backdropOpacity={1} backdropColor={"#ffd200"}>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                     <Text>How would you rate your mood?</Text>
-                    <Text>Sadness</Text>
+                    <Text>Sad</Text>
                     <Slider
                         style={{ width: 300 }}
                         step={1}
@@ -62,7 +62,7 @@ export class MoodSurvey extends Component {
                         {this.state.sadnessRating}
                     </Text>
 
-                    <Text>Loneliness</Text>
+                    <Text>Lonely</Text>
                     <Slider
                         style={{ width: 300 }}
                         step={1}
@@ -75,7 +75,7 @@ export class MoodSurvey extends Component {
                         {this.state.lonelinessRating}
                     </Text>
 
-                    <Text>Anxiousness</Text>
+                    <Text>Anxious</Text>
                     <Slider
                         style={{ width: 300 }}
                         step={1}
@@ -88,7 +88,7 @@ export class MoodSurvey extends Component {
                         {this.state.anxiousnessRating}
                     </Text>
 
-                    <Text>Stress</Text>
+                    <Text>Stressed</Text>
                     <Slider
                         style={{ width: 300 }}
                         step={1}
@@ -101,7 +101,7 @@ export class MoodSurvey extends Component {
                         {this.state.stressRating}
                     </Text>
 
-                    <Text>Anger</Text>
+                    <Text>Angry</Text>
                     <Slider
                         style={{ width: 300 }}
                         step={1}
@@ -110,7 +110,11 @@ export class MoodSurvey extends Component {
                         value={this.state.angerRating}
                         onValueChange={val => this.setState({ angerRating: val })}
                     />
-                    <Text>Sleepyness</Text>
+                    <Text style={this.props.style}>
+                        {this.state.angerRating}
+                    </Text>
+             
+                    <Text>Sleepy</Text>
                     <Slider
                         style={{ width: 300 }}
                         step={1}
@@ -120,7 +124,7 @@ export class MoodSurvey extends Component {
                         onValueChange={val => this.setState({ sleepynessRating: val })}
                     />
                     <Text style={this.props.style}>
-                        {this.state.angerRating}
+                        {this.state.sleepynessRating}
                     </Text>
 
                     <Button
