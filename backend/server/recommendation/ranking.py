@@ -8,9 +8,7 @@ def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
     tasks = {}
     for key, prob in probabilites.items():
 
-        print("key: {}".format(key))
-        print("tContext: {}".format(tContext))
-        data = {
+        task_info = {
             "name": key,
             "title": tContext[key]["title"],
             "description": tContext[key]["description"],
@@ -18,7 +16,8 @@ def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
             "event_data" : [],
             "prob":  _personalize(key, prob, context, tContext)
         }
-        tasks[key] = data
+        tasks[key] = task_info
+    
     tasks = sorted(tasks.values(), key=lambda x:x['prob'], reverse=True)
     logger.info(str(tasks))
     
