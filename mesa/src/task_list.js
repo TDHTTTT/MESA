@@ -8,8 +8,6 @@ export class TaskList extends Component {
     constructor(props) {
         super(props);
 
-        this.taskListRef = React.createRef();
-
         this.state = {
             task1: { name: "task_1" },
             task2: { name: "task_2" },
@@ -71,7 +69,7 @@ export class TaskList extends Component {
 
     render() {
         return (
-            <ScrollView style={{ marginBottom: 60 }} ref={this.taskListRef} > 
+            <ScrollView style={{ marginBottom: 60 }} > 
                 <Task name={this.state.task1.name} description={this.state.task1.description} />
                 <Task name={this.state.task2.name} description={this.state.task2.description} />
                 <Task name={this.state.task3.name} description={this.state.task3.description} />
