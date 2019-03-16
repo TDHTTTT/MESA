@@ -505,7 +505,7 @@
         ]
     },
 
-    "Go to event": { // This would have to retrieve events from the ARC.
+    "Go to event": {
         "title": "Go to event: ",
         "description": "",
         "labels": [
