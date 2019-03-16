@@ -1,6 +1,7 @@
 import { weatherState } from "./weather";
 import { activityLevel } from "./activity_level";
-import { LEVELS, STATE } from "./levels";
+import { timeTState } from "./time_of_day"
+import { LEVELS, STATE, TSTATE } from "./levels";
 import _ from 'lodash'
 
 class PersonalModel {
@@ -22,7 +23,7 @@ class PersonalModel {
         
         this.activity = LEVELS.UNKNOWN;
         this.weather = STATE.UNKNOWN;
-
+        this.time_of_day = TSTATE.UNKNOWN;
         this.dependencies = []
     }
 
@@ -40,15 +41,18 @@ class PersonalModel {
 
     __updateContext(){
         var _this = this;
-        // Calls __calculateContext after both activity and weather has been collected.
+        // Calls __calculateContext after time of day, activity and weather has been collected.
         var finished = _.after(2, _this.__calculateContext.bind(_this));
 
-        // Get time of day?
+        timeTState.updateTimeTState().then(() => {
+            _this.time_of_day = timeTState.getTimeTState();
+            finished();
+        });
 
         activityLevel.updateActivityLevel().then(() => {
             _this.activity = activityLevel.getActivityLevel();
             finished();
-        });
+        }); 
 
         weatherState.updateWeatherState().then(() => {
             _this.weather = weatherState.getState();
@@ -59,8 +63,10 @@ class PersonalModel {
     __calculateContext() {
         console.log("Activity value: " + this.activity);
         console.log("Weather value: " + this.weather);
+        console.log("Time of day: " + this.time_of_day);
 
         // Get previous recommendations and how the user felt about them.
+
 
     }
 
