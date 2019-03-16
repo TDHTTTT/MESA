@@ -1,0 +1,68 @@
+{
+  {
+    "time" : "2019-03-13",
+    "weather": "Good",
+    "time_of_day": "Afternoon",
+    "activity": "Low",
+    "labels": [
+        "workout",
+        "mindfulness"
+        ],
+    "preference":"Yes"
+  },
+  {
+    "time" : "2019-03-12",
+    "weather": "Good",
+    "time_of_day": "Morning",
+    "activity": "Low",
+    "labels": [
+        "workout",
+        "mindfulness"
+        ],
+    "preference":"No"
+  },
+  {
+    "time" : "2019-03-06",
+    "weather": "Bad",
+    "time_of_day": "Afternoon",
+    "activity": "Low",
+    "labels": [
+        "workout",
+        "social"
+        ],
+    "preference":"No"
+  },
+  {
+    "time" : "2019-03-05",
+    "weather": "Bad",
+    "time_of_day": "Morning",
+    "activity": "Low",
+    "labels": [
+        "workout",
+        "social"
+        ],
+    "preference":"No"
+  },
+  {
+    "time" : "2019-02-28",
+    "weather": "Good",
+    "time_of_day": "Afternoon",
+    "activity": "High",
+    "labels": [
+        "workout",
+        "social"
+        ],
+    "preference":"No"
+  },
+  {
+    "time" : "2019-02-27",
+    "weather": "Good",
+    "time_of_day": "Afternoon",
+    "activity": "High",
+    "labels": [
+        "workout",
+        "mindfulness"
+        ],
+    "preference":"No"
+  }
+}
