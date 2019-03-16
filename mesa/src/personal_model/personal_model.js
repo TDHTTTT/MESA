@@ -1,3 +1,8 @@
+import { weatherState } from "./weather";
+import { activityLevel } from "./activity_level";
+import { LEVELS, STATE } from "./levels";
+import _ from 'lodash'
+
 class PersonalModel {
     constructor(){
         this.state = {
@@ -14,6 +19,9 @@ class PersonalModel {
             mindfulness: 1.0,
             social: 1.0
         };
+        
+        this.activity = LEVELS.UNKNOWN;
+        this.weather = STATE.UNKNOWN;
 
         this.dependencies = []
     }
@@ -31,16 +39,29 @@ class PersonalModel {
     }
 
     __updateContext(){
-        // Here we update the context
-        // What are the inputs?
-        // How do we calculate the context?
-        // Get act activity level of user.
+        var _this = this;
+        // Calls __calculateContext after both activity and weather has been collected.
+        var finished = _.after(2, _this.__calculateContext.bind(_this));
 
-        // activityLevel.updateActivityLevel().then(
-        //     () => {
-        //         let activity = activityLevel.getActivityLevel();
-        //         console.log("Personal Model: Activity level of the user is: " + activity);
-        //     });
+        // Get time of day?
+
+        activityLevel.updateActivityLevel().then(() => {
+            _this.activity = activityLevel.getActivityLevel();
+            finished();
+        });
+
+        weatherState.updateWeatherState().then(() => {
+            _this.weather = weatherState.getState();
+            finished();
+        })
+    }
+
+    __calculateContext() {
+        console.log("Activity value: " + this.activity);
+        console.log("Weather value: " + this.weather);
+
+        // Get previous recommendations and how the user felt about them.
+
     }
 
     updatePersonalModel(mc_answers) {
