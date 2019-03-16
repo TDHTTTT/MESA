@@ -1,7 +1,7 @@
 {
-    "yoga": {
-        "title": "Yoga - Empty your mind",
-        "description": "Go do some Yoga exercises to empty your mind!",
+    "Yoga": {
+        "title": "Yoga",
+        "description": "Perform simple Yoga exercises for 10 minutes to empty your mind.",
         "labels": [
             "workout",
             "mindfulness"
@@ -13,7 +13,7 @@
                 "sleepyness": 4.0,
                 "anxiousness": 4.0,
                 "stress": 5.0,
-                "anger": 3
+                "anger": 3.0
             },
             {
                 "sadness": 0.0,
@@ -25,9 +25,10 @@
             }
         ]
     },
+
     "Running": {
-        "title": "Go for a run!",
-        "description": "Take your running shoes out of the closest and go for a run!",
+        "title": "Running",
+        "description": "Go outside, and lightly jog for about 10 minutes.",
         "labels": [
             "workout",
             "social"
@@ -39,20 +40,473 @@
                 "sleepyness": 0.0,
                 "anxiousness": 0.0,
                 "stress": 5.0,
-                "anger": 3.0
+                "anger": 2.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 1.0,
+                "anxiousness": 4.0,
+                "stress": 3.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Walking": {
+        "title": "Walking",
+        "description": "Walk around outside and appreciate the scenery for about 10 minutes.",
+        "labels": [
+            "workout",
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 2.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 4.0,
+                "stress": 5.0,
+                "anger": 0.0
             },
             {
                 "sadness": 0.0,
                 "lonelyness": 0.0,
                 "sleepyness": 4.0,
                 "anxiousness": 5.0,
+                "stress": 4.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Breathing Exercise": {
+        "title": "Breathing Exercise",
+        "description": "Perform simple breathing exercises to calm yourself down.",
+        "labels": [
+            "mindfulness",
+            "workout"
+        ],
+        "states": [
+            {
+                "sadness": 1.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 4.0,
+                "stress": 4.0,
+                "anger": 1.0
+            },
+            {
+                "sadness": 3.0,
+                "lonelyness": 3.0,
+                "sleepyness": 0.0,
+                "anxiousness": 5.0,
+                "stress": 2.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Call a friend": {
+        "title": "Call a friend",
+        "description": "Reach out to a friend and work through your concerns together.",
+        "labels": [
+            "social",
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 4.0,
+                "sleepyness": 0.0,
+                "anxiousness": 4.0,
+                "stress": 4.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 3.0,
+                "sleepyness": 0.0,
+                "anxiousness": 3.0,
+                "stress": 4.0,
+                "anger": 5.0
+            }
+        ]
+    },
+
+    "Listen to music": {
+        "title": "Listen to music",
+        "description": "Get comfortable, close your eyes, and listen to the music.",
+        "labels": [
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 5.0,
+                "lonelyness": 2.0,
+                "sleepyness": 4.0,
+                "anxiousness": 3.0,
+                "stress": 1.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 3.0,
+                "lonelyness": 3.0,
+                "sleepyness": 1.0,
+                "anxiousness": 0.0,
+                "stress": 5.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Meditate": {
+        "title": "Meditate",
+        "description": "Close your eyes, clear your thoughts, and focus your mind.",
+        "labels": [
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 2.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 5.0,
+                "stress": 4.0,
+                "anger": 3.0
+            },
+            {
+                "sadness": 1.0,
+                "lonelyness": 4.0,
+                "sleepyness": 0.0,
+                "anxiousness": 3.0,
+                "stress": 0.0,
+                "anger": 3.0
+            }
+        ]
+    },
+
+    "Journal": {
+        "title": "Journal",
+        "description": "Write down what's bothering you onto paper.",
+        "labels": [
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 4.0,
+                "stress": 4.0,
+                "anger": 1.0
+            },
+            {
+                "sadness": 1.0,
+                "lonelyness": 1.0,
+                "sleepyness": 0.0,
+                "anxiousness": 2.0,
+                "stress": 5.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Organize your room": {
+        "title": "Organize your room",
+        "description": "De-stress while being productive by taking some time to sort your room.",
+        "labels": [
+            "mindfulness",
+            "workout"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 1.0,
+                "anxiousness": 0.0,
+                "stress": 3.0,
+                "anger": 4.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 2.0,
+                "stress": 4.0,
+                "anger": 5.0
+            }
+        ]
+    },
+
+    "Solve a puzzle": {
+        "title": "Solve a puzzle",
+        "description": "Free your mind from a stressful environment and keep your brain active with a puzzle of your choice.",
+        "labels": [
+            "mindfulness",
+            "social"
+        ],
+        "states": [
+            {
+                "sadness": 1.0,
+                "lonelyness": 4.0,
+                "sleepyness": 0.0,
+                "anxiousness": 4.0,
+                "stress": 4.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 1.0,
+                "anxiousness": 3.0,
+                "stress": 5.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Draw": {
+        "title": "Draw",
+        "description": "Clear your mind by focusing your emotions into something creative.",
+        "labels": [
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 1.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 3.0,
+                "stress": 4.0,
+                "anger": 1.0
+            },
+            {
+                "sadness": 3.0,
+                "lonelyness": 4.0,
+                "sleepyness": 0.0,
+                "anxiousness": 0.0,
+                "stress": 2.0,
+                "anger": 4.0
+            }
+        ]
+    },
+
+    "Pushups": {
+        "title": "Pushups",
+        "description": "Release your strong emotions into something useful to benefit your physical health.",
+        "labels": [
+            "workout"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 3.0,
+                "stress": 4.0,
+                "anger": 4.0
+            },
+            {
+                "sadness": 2.0,
+                "lonelyness": 1.0,
+                "sleepyness": 0.0,
+                "anxiousness": 0.0,
+                "stress": 0.0,
+                "anger": 5.0
+            }
+        ]
+    },
+
+    "Nap": {
+        "title": "Nap",
+        "description": "If you're so tired you aren't being productive, take a power nap.",
+        "labels": [
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 4.0,
+                "anxiousness": 3.0,
+                "stress": 5.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 5.0,
+                "anxiousness": 3.0,
+                "stress": 3.0,
+                "anger": 2.0
+            }
+        ]
+    },
+
+    "Stretch": {
+        "title": "Stretch",
+        "description": "Take a small break and stretch your body out.",
+        "labels": [
+            "mindfulness",
+            "workout"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 3.0,
+                "anxiousness": 2.0,
+                "stress": 4.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 3.0,
+                "anxiousness": 3.0,
                 "stress": 3.0,
                 "anger": 0.0
             }
         ]
     },
-    "Go to event": {
-        "title": "Go to event!",
+
+    "Laugh": {
+        "title": "Laugh",
+        "description": "Watch a funny video or look at a funny picture and smile.",
+        "labels": [
+            "mindfulness",
+            "social"
+        ],
+        "states": [
+            {
+                "sadness": 1.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 0.0,
+                "stress": 4.0,
+                "anger": 4.0
+            },
+            {
+                "sadness": 2.0,
+                "lonelyness": 1.0,
+                "sleepyness": 3.0,
+                "anxiousness": 4.0,
+                "stress": 2.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Create a plan": {
+        "title": "Create a plan",
+        "description": "Plan out the future: think about how you will use your time productively.",
+        "labels": [
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 3.0,
+                "stress": 4.0,
+                "anger": 1.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 0.0,
+                "anxiousness": 4.0,
+                "stress": 2.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Smile": {
+        "title": "Smile",
+        "description": "Smile at a stranger, greet somebody you wouldn't normally greet. Happiness is contagious.",
+        "labels": [
+            "social",
+            "mindfulness"
+        ],
+        "states": [
+            {
+                "sadness": 4.0,
+                "lonelyness": 1.0,
+                "sleepyness": 0.0,
+                "anxiousness": 0.0,
+                "stress": 0.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 3.0,
+                "lonelyness": 3.0,
+                "sleepyness": 0.0,
+                "anxiousness": 0.0,
+                "stress": 1.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Drink a glass of water": {
+        "title": "Drink a glass of water",
+        "description": "Being dehydrated is bad for both your physical and mental health. Drink some H2O!",
+        "labels": [
+            "mindfulness",
+            "workout"
+        ],
+        "states": [
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 1.0,
+                "anxiousness": 2.0,
+                "stress": 2.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 0.0,
+                "sleepyness": 2.0,
+                "anxiousness": 3.0,
+                "stress": 1.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "View art": {
+        "title": "View art",
+        "description": "Think about what the artist was feeling when they created the piece of art you are viewing.",
+        "labels": [
+            "mindfulness",
+            "social"
+        ],
+        "states": [
+            {
+                "sadness": 3.0,
+                "lonelyness": 3.0,
+                "sleepyness": 0.0,
+                "anxiousness": 2.0,
+                "stress": 0.0,
+                "anger": 0.0
+            },
+            {
+                "sadness": 0.0,
+                "lonelyness": 2.0,
+                "sleepyness": 0.0,
+                "anxiousness": 3.0,
+                "stress": 0.0,
+                "anger": 0.0
+            }
+        ]
+    },
+
+    "Go to event": { // This would have to retrieve events from the ARC.
+        "title": "Go to event: ",
         "description": "",
         "labels": [
             "workout",
@@ -68,11 +522,11 @@
                 "anger": 0.0
             },
             {
-                "sadness": 5.0,
+                "sadness": 1.0,
                 "lonelyness": 5.0,
                 "sleepyness": 0.0,
-                "anxiousness": 0.0,
-                "stress": 0.0,
+                "anxiousness": 4.0,
+                "stress": 3.0,
                 "anger": 0.0
             }
         ]
