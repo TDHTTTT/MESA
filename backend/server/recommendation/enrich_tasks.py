@@ -8,21 +8,14 @@ def enrichTasks(list_of_tasks):
     return enrichted_tasks
 
 def __enrichTask(task):
-    events = get_upcoming_events()
+    workout_events = get_upcoming_events("workout", 1)
+    social_events = get_upcoming_events("social", 1)
 
-    if "workout" in task["labels"]:
-        event_list = []
-        for i, event in enumerate(events):
-
-            e = {
-                "name" : event[2],
-                "time": event[4].strftime("%H:%M"),
-                "place": "ARC"
-            }
-            event_list.append(e)
-            if i >= 2:
-                break
-
-        task["event_data"] = event_list
+    if "social" in task["labels"]:
+        task["event_data"] = social_events
+    elif "workout" in task["labels"]:
+        task["event_data"] = workout_events
 
     return task
+
+

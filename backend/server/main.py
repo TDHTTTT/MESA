@@ -8,8 +8,9 @@ from flask import Flask, request, jsonify
 
 from recommendation.RecommendationResource import initModel, recommendTasks
 from data_collection.scraper_scheduler import initScheduler
-from data_collection.web_scraper import arcDataToDb, get_next_n_events
 from data_collection.weather_conditions import get_status, is_okay_to_go_outside
+from data_collection.web_scraper import eventsToDb
+
 from error_handling import InvalidArguments
 import db
 
@@ -47,8 +48,8 @@ def create_app() -> Flask:
 
     # Register initialization functions for machine learning and web scraping
     app.before_first_request(initModel)
-    app.before_first_request(initScheduler)
-    app.before_first_request(arcDataToDb)
+    # app.before_first_request(initScheduler)
+    app.before_first_request(eventsToDb)
 
     # Register error handler for bad arguments
     @app.errorhandler(InvalidArguments)
