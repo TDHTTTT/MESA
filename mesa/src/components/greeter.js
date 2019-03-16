@@ -8,11 +8,8 @@ export class Greeter extends Component {
   render() {
     return (
       <View style={styles.body}>
-        <Text style={styles.h1}>Hello, NAME!</Text>
-        <TouchableOpacity onPress={ () => { this.toggleModalVisibility()  } }>
-          <Text style={styles.pYellow}>How are you feeling?</Text>
-        </TouchableOpacity>
-        {/* <Text style={styles.p}>The weather looks WEATHER today.</Text> */}
+        <Text style={styles.h1}>Hello, Anteater!</Text>
+        <Text style={styles.pYellow}>How are you feeling?</Text>
         <Weather style={styles.p} />
         <ActivityComponent style={styles.p} />
         <Text style={styles.p}>You have N tasks left to do today.</Text>

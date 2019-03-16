@@ -21,7 +21,6 @@ export class MoodSurvey extends Component {
 
     toggleModalVisibility() {
         this.setState({ modalVisibilityToggle: !this.state.modalVisibilityToggle });
-
     }
 
     resetRatings() {
@@ -34,10 +33,6 @@ export class MoodSurvey extends Component {
     }
 
     submitMCQresults() {
-        // var mcq_answers = [this.state.sadnessRating,
-        // this.state.lonelinessRating, this.state.anxiousnessRating,
-        // this.state.stressRating, this.state.angerRating];
-
         personalModel.updatePersonalModel(this.state) // gets passed to personal model...
         this.resetRatings();
         console.log("MCQ results submitted.");

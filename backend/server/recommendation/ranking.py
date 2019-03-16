@@ -6,20 +6,20 @@ logger = logging.getLogger(__name__)
 def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
     # output needs be of the form of [{"name" : "", "description:":"",event_data:{}}]
     tasks = {}
-    for k,v in probabilites.items():
-        data = {
-            "name": k,
-            "description" : tContext[k][0],
-            "labels": tContext[k][1],
-            "event_data" : {},
-            "prob":  _personalize(k, v, context, tContext)
+    for key, prob in probabilites.items():
+
+        task_info = {
+            "name": key,
+            "title": tContext[key]["title"],
+            "description": tContext[key]["description"],
+            "labels": tContext[key]["labels"],
+            "event_data" : [],
+            "prob":  _personalize(key, prob, context, tContext)
         }
-        tasks[k] = data
+        tasks[key] = task_info
+    
     tasks = sorted(tasks.values(), key=lambda x:x['prob'], reverse=True)
     logger.info(str(tasks))
-    print("\n\n")
-    print(tasks)
-    print("\n\n")
     
     # before returning truncate to number_of_tasks?
     return _dropProb(tasks)[:number_of_tasks]
@@ -35,7 +35,7 @@ def _personalize(key, probability, context, tContext) -> float:
     Calculate the personalized probability for a single task
     """
     weight = 1
-    for c in tContext[key][1]:
+    for c in tContext[key]["labels"]:
         weight += context[c]
     return _sigmoid(weight*probability) - 0.5
 
