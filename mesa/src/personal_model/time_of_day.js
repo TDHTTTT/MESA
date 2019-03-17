@@ -8,7 +8,7 @@ class TimeTState {
     async updateTimeTState() {
         let date = new Date();
         let time_of_day = date.getHours();
-        console.log("Now is" + time_of_day);
+        console.log("Now is around " + time_of_day + " o'clock");
 
         if (time_of_day > 18) {
             console.log("Time of day is set too: " + TSTATE.NIGHT);
