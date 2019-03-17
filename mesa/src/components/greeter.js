@@ -12,8 +12,8 @@ export class Greeter extends Component {
         <Text style={styles.pYellow}>How are you feeling?</Text>
         <Weather style={styles.p} />
         <ActivityComponent style={styles.p} />
-        <Text style={styles.p}>You have N tasks left to do today.</Text>
-        <Text style={styles.p}>There are M events coming up.</Text>
+        {/* <Text style={styles.p}>You have N tasks left to do today.</Text> */}
+        {/* <Text style={styles.p}>There are M events coming up.</Text> */}
         <Text style={[styles.p, {marginTop: "auto"}]}>TODAY : {new Date().toDateString()}</Text>
         <MoodSurvey style={styles.welcome}/>
         </View>

@@ -56,15 +56,21 @@ def get_upcoming_events(label, number_of_events=2) -> list:
         # logger.warning(tuple(row))
         if row["dayOfWeek"] == today_day:
             time = to_datetime(row)
-            events_today.append(row[:4] + (time,))
+            events_today.append({
+                    "name": row["name"],
+                    "time": time,
+                    "label": row["label"],
+                    "location": row["location"],
+                    "dayOfWeek": row["dayOfWeek"],
+                })
 
     # Filter out events happening after now
     def now_or_later(event) -> bool:
-        return event[4] > now
+        return event["time"] > now
     events_today = list(filter(now_or_later, events_today))
 
     # Sort events by time
-    events_today.sort(key=lambda x: x[4])
+    events_today.sort(key=lambda x: x["time"])
 
     logger.debug("Events today after now sorted: " + repr(events_today))
 
@@ -82,10 +88,10 @@ def eventsToDb():
     now = datetime.datetime.today()
     today_day = now.strftime("%A")
 
-    # global classes_list
-    # if classes_list is None:
-    #     classes_list = scrape_arc.scrapeARC()
-    #     __commit_data_db(today_day, classes_list, "workout", location="ARC")
+    global classes_list
+    if classes_list is None:
+        classes_list = scrape_arc.scrapeARC()
+        __commit_data_db(today_day, classes_list, "workout", location="ARC")
 
     global event_list
     if event_list is None:
