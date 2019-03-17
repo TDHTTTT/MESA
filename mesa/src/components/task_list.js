@@ -67,6 +67,7 @@ export class TaskList extends Component {
     }
 
     render() {
+        console.log(this.state);
         return (
             <ScrollView style={{ marginBottom: 60 }} > 
                 <Task task={this.state.task1} />

@@ -88,10 +88,10 @@ def eventsToDb():
     now = datetime.datetime.today()
     today_day = now.strftime("%A")
 
-    # global classes_list
-    # if classes_list is None:
-    #     classes_list = scrape_arc.scrapeARC()
-    #     __commit_data_db(today_day, classes_list, "workout", location="ARC")
+    global classes_list
+    if classes_list is None:
+        classes_list = scrape_arc.scrapeARC()
+        __commit_data_db(today_day, classes_list, "workout", location="ARC")
 
     global event_list
     if event_list is None:
