@@ -1,7 +1,9 @@
 import { weatherState } from "./weather";
 import { activityLevel } from "./activity_level";
-import { LEVELS, STATE } from "./levels";
+import { timeTState } from "./time_of_day"
+import { LEVELS, STATE, TSTATE } from "./levels";
 import _ from 'lodash'
+import pm from '../data/personal-model.json'
 
 class PersonalModel {
     constructor(){
@@ -15,14 +17,14 @@ class PersonalModel {
         };
         
         this.context = {
-            workout: 1.0,
-            mindfulness: 1.0,
-            social: 1.0
+            workout: 0.5,
+            mindfulness: 0.5,
+            social: 0.5
         };
         
         this.activity = LEVELS.UNKNOWN;
         this.weather = STATE.UNKNOWN;
-
+        this.time_of_day = TSTATE.UNKNOWN;
         this.dependencies = []
     }
 
@@ -40,15 +42,18 @@ class PersonalModel {
 
     __updateContext(){
         var _this = this;
-        // Calls __calculateContext after both activity and weather has been collected.
-        var finished = _.after(2, _this.__calculateContext.bind(_this));
+        // Calls __calculateContext after time of day, activity and weather has been collected.
+        var finished = _.after(3, _this.__calculateContext.bind(_this));
 
-        // Get time of day?
+        timeTState.updateTimeTState().then(() => {
+            _this.time_of_day = timeTState.getTimeTState();
+            finished();
+        });
 
         activityLevel.updateActivityLevel().then(() => {
             _this.activity = activityLevel.getActivityLevel();
             finished();
-        });
+        }); 
 
         weatherState.updateWeatherState().then(() => {
             _this.weather = weatherState.getState();
@@ -59,9 +64,33 @@ class PersonalModel {
     __calculateContext() {
         console.log("Activity value: " + this.activity);
         console.log("Weather value: " + this.weather);
-
+        console.log("Time of day: " + this.time_of_day);
         // Get previous recommendations and how the user felt about them.
+        // loop over previous responses (~personal model)
+    
+        for (var i=0; i<pm.length; i++) {
+            curr = pm[i];
+            if (curr["preference"] == "Yes") {
+                for (var j=0; j<curr["labels"].length; j++) {
+                    curr_label = curr["labels"][j];
+                    //console.log("Yes. Before:"+this.context[curr_label]);
+                    this.context[curr_label] = Math.sqrt(this.context[curr_label]);
+                    //console.log("After:"+this.context[curr_label]);
+                }
+            }
+            else {
+                for (var j=0; j<curr["labels"].length; j++) {
+                    curr_label = curr["labels"][j];
+                    //console.log("No. Before:"+this.context[curr_label]);
+                    this.context[curr_label] = (this.context[curr_label])/1.2;
+                    //console.log("After:"+this.context[curr_label]);
+                }
+            }
+        }
 
+        // console.log("Final workout:" + this.context["workout"]);
+        // console.log("Final mindfulness:" + this.context["mindfulness"]);
+        // console.log("Final social:" + this.context["social"]);
     }
 
     updatePersonalModel(mc_answers) {
