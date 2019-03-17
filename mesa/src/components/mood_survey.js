@@ -142,3 +142,7 @@ export class MoodSurvey extends Component {
         )
     }
 }
+
+export const toggleModalVisibility = () => {
+    toggleModalVisibility();
+}
