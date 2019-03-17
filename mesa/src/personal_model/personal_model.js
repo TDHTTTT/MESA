@@ -86,8 +86,8 @@ class PersonalModel {
                         this.context[curr_label] = (this.context[curr_label])/1.2;
                     }
                 }
+            }
         }
-    }
         console.log("Final workout:" + this.context["workout"]);
         console.log("Final mindfulness:" + this.context["mindfulness"]);
         console.log("Final social:" + this.context["social"]);
