@@ -32,9 +32,9 @@ def _readtContext() -> dict:
     """
     tContext = {}
     with open("./data/tasks.json") as f:
-        data = json.load(f)
-        for k,v in data.items():
-            tContext[k] = (v['description'], v['labels'])
+        # Load all the json data into its context, not just a subset.
+        tContext = json.load(f)
+
     return tContext
     
 

@@ -11,5 +11,8 @@ CREATE TABLE events (
     id INTEGER PRIMARY KEY,
     dayOfWeek TEXT NOT NULL,
     name TEXT NOT NULL,
-    time INTEGER NOT NULL 
+    time INTEGER NOT NULL,
+    label TEXT NOT NULL,
+    location TEXT NOT NULL,
+    UNIQUE(dayOfWeek,name,time)
 );

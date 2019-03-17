@@ -24,5 +24,9 @@ def is_okay_to_go_outside() -> bool:
     """
     observation = OWM.weather_at_id(IRVINE_ID)
     status = observation.get_weather().get_status()
-    return (status != "Rain" and status != "Snow")
+
+    result = {
+        "weather": str(status != "Rain" and status != "Snow")
+    }
+    return result
 

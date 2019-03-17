@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
 				<Greeter/>
 				
-				<Card title="n Tasks" containerStyle={{
+				<Card title="Tasks" containerStyle={{
 					flex: 0.7,
 					marginBottom: 30,
 				}}>
