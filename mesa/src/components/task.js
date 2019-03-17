@@ -45,11 +45,6 @@ export class Task extends Component {
         this.props.task.name,
         this.props.task.description,
         [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
         {cancelable: false},

@@ -3,6 +3,9 @@ COPY ./requirements.txt /backend/requirements.txt
 WORKDIR /backend
 RUN pip install -r requirements.txt
 
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 FROM dependencies
 ADD ./server/ /backend
 ENTRYPOINT ["./server_setup_entrypoint"]
