@@ -43,7 +43,7 @@ class PersonalModel {
     __updateContext(){
         var _this = this;
         // Calls __calculateContext after time of day, activity and weather has been collected.
-        var finished = _.after(2, _this.__calculateContext.bind(_this));
+        var finished = _.after(3, _this.__calculateContext.bind(_this));
 
         timeTState.updateTimeTState().then(() => {
             _this.time_of_day = timeTState.getTimeTState();
