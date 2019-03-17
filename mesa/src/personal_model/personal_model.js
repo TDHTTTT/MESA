@@ -43,7 +43,7 @@ class PersonalModel {
     __updateContext(){
         var _this = this;
         // Calls __calculateContext after time of day, activity and weather has been collected.
-        var finished = _.after(3, _this.__calculateContext.bind(_this));
+        var finished = _.after(2, _this.__calculateContext.bind(_this));
 
         timeTState.updateTimeTState().then(() => {
             _this.time_of_day = timeTState.getTimeTState();
@@ -62,35 +62,34 @@ class PersonalModel {
     }
 
     __calculateContext() {
-        console.log("Activity value: " + this.activity);
-        console.log("Weather value: " + this.weather);
-        console.log("Time of day: " + this.time_of_day);
+        console.log("Current activity value: " + this.activity);
+        console.log("Current weather value: " + this.weather);
+        console.log("Current time of day: " + this.time_of_day);
         // Get previous recommendations and how the user felt about them.
         // loop over previous responses (~personal model)
     
         for (var i=0; i<pm.length; i++) {
             curr = pm[i];
-            if (curr["preference"] == "Yes") {
-                for (var j=0; j<curr["labels"].length; j++) {
-                    curr_label = curr["labels"][j];
-                    //console.log("Yes. Before:"+this.context[curr_label]);
-                    this.context[curr_label] = Math.sqrt(this.context[curr_label]);
-                    //console.log("After:"+this.context[curr_label]);
+            if ((this.weather == "NA" || curr["weather"].toLowerCase() == this.weather) && 
+                (this.time_of_day == "NA" || curr["time_of_day"].toLowerCase() == this.time_of_day) &&
+                (this.activity == "NA" || curr["activity"].toLowerCase() == this.activity)) {
+                if (curr["preference"] == "Yes") {
+                    for (var j=0; j<curr["labels"].length; j++) {
+                        curr_label = curr["labels"][j];
+                        this.context[curr_label] = Math.sqrt(this.context[curr_label]);
+                    }
                 }
-            }
-            else {
-                for (var j=0; j<curr["labels"].length; j++) {
-                    curr_label = curr["labels"][j];
-                    //console.log("No. Before:"+this.context[curr_label]);
-                    this.context[curr_label] = (this.context[curr_label])/1.2;
-                    //console.log("After:"+this.context[curr_label]);
+                else {
+                    for (var j=0; j<curr["labels"].length; j++) {
+                        curr_label = curr["labels"][j];
+                        this.context[curr_label] = (this.context[curr_label])/1.2;
+                    }
                 }
-            }
         }
-
-        // console.log("Final workout:" + this.context["workout"]);
-        // console.log("Final mindfulness:" + this.context["mindfulness"]);
-        // console.log("Final social:" + this.context["social"]);
+    }
+        console.log("Final workout:" + this.context["workout"]);
+        console.log("Final mindfulness:" + this.context["mindfulness"]);
+        console.log("Final social:" + this.context["social"]);
     }
 
     updatePersonalModel(mc_answers) {
