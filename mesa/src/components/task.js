@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Alert } from 'react-native';
+import { Event } from './event_component';
 
 export class Task extends Component {
     completeTask() {
@@ -41,8 +42,8 @@ export class Task extends Component {
 
     viewDescription() {
       Alert.alert(
-        this.props.name,
-        this.props.description,
+        this.props.task.name,
+        this.props.task.description,
         [
           {
             text: 'Cancel',
@@ -57,20 +58,19 @@ export class Task extends Component {
 
     render() {
         return (
+          <View>
           <View style={styles.taskitem}>
             <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
               <TouchableOpacity onPress={ () => { this.viewDescription() } }>
-                <Text>{this.props.name}</Text>
+                <Text>{this.props.task.name}</Text>
               </TouchableOpacity>
+              <Event event={this.props.task.event_data} />
             </View>
-            <View style={{flex: 1}}>
-              <Button
-                  onPress={ () => { this.completeTask() } }
-                  title="Complete Task"
-                  color="#ffd200"
-                  accessibilityLabel="Click here to complete the task."
-                />
-            </View>
+
+          </View>
+
+          
+            <Button onPress={() => { this.completeTask() }} title="Complete Task" color="#ffd200" accessibilityLabel="Click here to complete the task."/>
           </View>
         );
     }

@@ -9,9 +9,9 @@ export class TaskList extends Component {
         super(props);
 
         this.state = {
-            task1: { name: "task_1" },
-            task2: { name: "task_2" },
-            task3: { name: "task_3" }
+            task1: { name: "task_1", description:"", event_data:[]},
+            task2: { name: "task_2", description:"", event_data:[]},
+            task3: { name: "task_3", description:"", event_data:[]}
         };
 
         personalModel.register(this);
@@ -69,9 +69,9 @@ export class TaskList extends Component {
     render() {
         return (
             <ScrollView style={{ marginBottom: 60 }} > 
-                <Task name={this.state.task1.name} description={this.state.task1.description} />
-                <Task name={this.state.task2.name} description={this.state.task2.description} />
-                <Task name={this.state.task3.name} description={this.state.task3.description} />
+                <Task task={this.state.task1} />
+                <Task task={this.state.task2} />
+                <Task task={this.state.task3} />
             </ScrollView>
         );
     }
