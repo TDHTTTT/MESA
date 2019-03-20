@@ -11,7 +11,7 @@ def scrapeUCIToday():
     """
     url = "https://today.uci.edu/calendar?event_types[]=92822"
 
-    page = requests.get(url)
+    page = requests.get(url, verify=False)
     soup = BeautifulSoup(page.text, 'html.parser')
 
     schedule = soup.findAll("div", {"class": "item event_item vevent"})
