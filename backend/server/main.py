@@ -3,10 +3,10 @@ Main flask script. Defines the '/recommendation/' route and parses input.
 """
 import os
 from logging.config import dictConfig
-
+from pprint import pformat
 from flask import Flask, request, jsonify
 
-from recommendation.RecommendationResource import initModel, recommendTasks
+from recommendation.recommendation_resource import initModel, recommendTasks
 from data_collection.scraper_scheduler import initScheduler
 from data_collection.weather_conditions import get_status, is_okay_to_go_outside
 from data_collection.web_scraper import eventsToDb
@@ -71,7 +71,7 @@ def create_app() -> Flask:
         Returns:
             JSON dict of ranked tasks
         """
-        app.logger.info("Request data: '{}'".format(request.data))
+        app.logger.info("Request data: '{}'".format(pformat(request.data)))
 
         # Ensure request data are in JSON format
         if not request.is_json:
@@ -94,14 +94,14 @@ def create_app() -> Flask:
         app.logger.info("Number of Resources: {}".format(num_resources))
 
         state = content["state"]
-        app.logger.info("State: {}".format(state))
+        app.logger.info("State: {}".format(pformat(state)))
 
         context = content["context"]
-        app.logger.info("Context: {}".format(context))
+        app.logger.info("Context: {}".format(pformat(context)))
 
         # Get recommendation list
         responseRec = recommendTasks(num_resources=num_resources, state=state, context=context)
-        app.logger.info("Sending: '{}'".format(responseRec))
+        app.logger.info("Sending: '{}'".format(pformat(responseRec)))
 
         # Return json of recommendation list
         return jsonify(responseRec)

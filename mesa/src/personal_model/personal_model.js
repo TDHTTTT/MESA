@@ -40,7 +40,7 @@ class PersonalModel {
         }
     }
 
-    __updateContext(){
+    async __updateContext(){
         var _this = this;
         // Calls __calculateContext after time of day, activity and weather has been collected.
         // If all 3 things can be retrived or will wait forever
@@ -91,16 +91,13 @@ class PersonalModel {
         console.log("Final workout:" + this.context["workout"]);
         console.log("Final mindfulness:" + this.context["mindfulness"]);
         console.log("Final social:" + this.context["social"]);
+
+        this.update()
     }
 
     updatePersonalModel(mc_answers) {
         this.__updateState(mc_answers);
         this.__updateContext();
-
-
-        this.dependencies.forEach(dep => {
-            dep.update()
-        })
     }
 
     getState() {
@@ -109,6 +106,13 @@ class PersonalModel {
 
     getContext() {
         return this.context;
+    }
+
+    update() {
+        console.log(this.dependencies)
+        this.dependencies.forEach(dep => {
+            dep.update()
+        });
     }
 
     register(dependency) {
