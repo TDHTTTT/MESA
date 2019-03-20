@@ -2,9 +2,9 @@
 
 ## How to run
 
-1. Start the backend first, see the README.md of the backend.
-2. Update the config.js with the IP address of your server*.
-3. Start the application
+1. Start the backend first, see the [README.md](./backend/README.md).
+2. Update the [config.js](./mesa/src/config.js) with the IP address of your server*.
+3. Start the application, see the [README.md](./mesa/README.md).
 
 (*) This is needed the phone is not able to find the server.
 
