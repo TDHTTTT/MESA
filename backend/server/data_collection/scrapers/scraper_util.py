@@ -1,4 +1,6 @@
-import time
+import datetime
+import dateutil.parser
+
 
 def __convert_time(time):
     start, _ = time.split('-')
@@ -10,7 +12,8 @@ def __convert_time(time):
 
 
 def convert_time(time_string, time_format):
-    event_time_obj = time.strptime(time_string, time_format)
+    event_time_obj = dateutil.parser.parse(time_string)
+    # event_time_obj = time.strptime(time_string, time_format)
     event_time_str = "{}{}".format(
-        event_time_obj.tm_hour, ("0" + str(event_time_obj.tm_min))[-2:])
+        event_time_obj.hour, ("0" + str(event_time_obj.minute))[-2:])
     return event_time_str

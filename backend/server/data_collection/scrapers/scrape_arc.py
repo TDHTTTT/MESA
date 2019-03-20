@@ -27,7 +27,7 @@ def scrapeARC():
     url = "https://www.campusrec.uci.edu/groupx/index.asp"
 
     logger.info("Scraping arc...")
-    page = requests.get(url)
+    page = requests.get(url, verify=False)
     soup = BeautifulSoup(page.text, 'html.parser')
     schedule = soup.find("div", {"id": "tabs-7"})\
         .findAll("td", {"class", "gxb"})
