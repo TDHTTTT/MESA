@@ -16,6 +16,10 @@ def __get_training_data(data):
     ])
 
 def read_train_data(file_name):
+    """
+    Read a JSON file with training data, with for each task there are multiple "states"
+    """
+
     data = None
     with open(file_name) as f:
         data = json.load(f)
@@ -35,6 +39,10 @@ def read_train_data(file_name):
     return X, Y
 
 class MLClassifier:
+    """
+    Initialize a Machine Learning model.
+    """
+
     def __init__(self, classifier=GaussianNB()):
         self.classifier = classifier
 

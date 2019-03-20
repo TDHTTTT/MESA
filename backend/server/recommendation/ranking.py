@@ -6,8 +6,10 @@ logger = logging.getLogger(__name__)
 def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
     # output needs be of the form of [{"name" : "", "description:":"",event_data:{}}]
     tasks = {}
-    for key, prob in probabilites.items():
-
+    
+    logger.info("Original Ranking:")
+    for i, (key, prob) in enumerate(probabilites.items()):
+        logger.info("{}. {}".format(i, key))
         task_info = {
             "name": key,
             "title": tContext[key]["title"],
@@ -19,7 +21,10 @@ def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
         tasks[key] = task_info
     
     tasks = sorted(tasks.values(), key=lambda x:x['prob'], reverse=True)
-    logger.info(str(tasks))
+
+    logger.info("Personalized Ranking:")
+    for i, t in enumerate(tasks):
+        logger.info("{}. {}".format(i, str(t["name"])))
     
     # before returning truncate to number_of_tasks?
     return _dropProb(tasks)[:number_of_tasks]
