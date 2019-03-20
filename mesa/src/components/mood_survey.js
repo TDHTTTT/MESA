@@ -9,6 +9,7 @@ export class MoodSurvey extends Component {
         super(props);
 
         this.state = {
+        	recordOfMentalStates: [],
             modalVisibilityToggle: true,
             sadnessRating: 0,
             lonelinessRating: 0,
@@ -34,10 +35,18 @@ export class MoodSurvey extends Component {
 
     submitMCQresults() {
         personalModel.updatePersonalModel(this.state) // gets passed to personal model...
+        this.recordMentalState(this.state);
         this.resetRatings();
         console.log("MCQ results submitted.");
     }
 
+    recordMentalState(mentalState) {
+    	var temp = [mentalState.sadnessRating, mentalState.lonelinessRating, mentalState.anxiousnessRating,
+    	mentalState.stressRating, mentalState.angerRating, mentalState.sleepynessRating];
+    	this.state.recordOfMentalStates = this.state.recordOfMentalStates.concat([temp]);
+    	console.log(this.state.recordOfMentalStates);
+    	console.log("Current mental state recorded.");
+    }
 
     render() {
         return (
@@ -132,4 +141,8 @@ export class MoodSurvey extends Component {
             </Modal>
         )
     }
+}
+
+export const toggleModalVisibility = () => {
+    toggleModalVisibility();
 }
