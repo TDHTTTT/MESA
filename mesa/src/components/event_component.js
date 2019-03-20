@@ -24,16 +24,23 @@ export class Event extends Component {
     }
 
     render() {
-        if (this.props.event.length == 0) {
+        try {
+            if (this.props.event.length == 0) {
+                return null;
+            }
+            else {
+                return (
+                    <TouchableOpacity onPress={() => { this.viewDescription() }}>
+                        <Text> Related Upcoming Event: {this.props.event[0].name} </Text>
+                    </TouchableOpacity>
+                );
+            }
+        }
+        catch(error) { // If the server fails...
+            console.log("Could not retrieve events...");
             return null;
         }
-        else {
-            return (
-                <TouchableOpacity onPress={() => { this.viewDescription() }}>
-                    <Text> Related Upcoming Event: {this.props.event[0].name} </Text>
-                </TouchableOpacity>
-            );
-        }
+        
     }
 }
 

@@ -24,7 +24,7 @@ export class MoodSurvey extends Component {
         this.setState({ modalVisibilityToggle: !this.state.modalVisibilityToggle });
     }
 
-    resetRatings() {
+    resetMentalState() {
         this.state.sadnessRating = 0;
         this.state.lonelinessRating = 0;
         this.state.anxiousnessRating = 0;
@@ -34,16 +34,57 @@ export class MoodSurvey extends Component {
     }
 
     submitMCQresults() {
-        personalModel.updatePersonalModel(this.state) // gets passed to personal model...
         this.recordMentalState(this.state);
-        this.resetRatings();
+        this.weighMentalState();
+        personalModel.updatePersonalModel(this.state);
+        this.resetMentalState();
         console.log("MCQ results submitted.");
     }
 
+    weighMentalState() {
+        var mentalStatesCount = this.state.recordOfMentalStates.length;
+        if (mentalStatesCount == 0)
+            {
+                return null;
+            }
+        var weightedSadnessRating = 0;
+        var weightedLonelinessRating = 0;
+        var weightedAnxiousnessRating = 0;
+        var weightedStressRating = 0;
+        var weightedAngerRating = 0;
+        var weightedSleepynessRating = 0;
+        var weight = 50;
+        var totalWeight = 0;
+        for (var i = 0; i < mentalStatesCount; i++)
+            {
+                weightedSadnessRating += this.state.recordOfMentalStates[i][0] * weight;
+                weightedLonelinessRating += this.state.recordOfMentalStates[i][1] * weight;
+                weightedAnxiousnessRating += this.state.recordOfMentalStates[i][2] * weight;
+                weightedStressRating += this.state.recordOfMentalStates[i][3] * weight;
+                weightedAngerRating += this.state.recordOfMentalStates[i][4] * weight;
+                weightedSleepynessRating += this.state.recordOfMentalStates[i][5] * weight;
+                totalWeight += weight;
+                weight -= 5;
+            }
+        
+        this.state.sadnessRating = Math.round(weightedSadnessRating / totalWeight); // Round it...
+        this.state.lonelinessRating = Math.round(weightedLonelinessRating / totalWeight); // Round it...
+        this.state.anxiousnessRating = Math.round(weightedAnxiousnessRating / totalWeight); // Round it...
+        this.state.stressRating = Math.round(weightedStressRating / totalWeight); // Round it...
+        this.state.angerRating = Math.round(weightedAngerRating / totalWeight); // Round it...
+        this.state.sleepynessRating = Math.round(weightedSleepynessRating / totalWeight); // Round it...
+        var temp = [this.state.sadnessRating, this.state.lonelinessRating, this.state.anxiousnessRating, this.state.stressRating, this.state.angerRating, this.state.sleepynessRating];
+        console.log("Ratings weighted...");
+        console.log(temp);
+    }
     recordMentalState(mentalState) {
-    	var temp = [mentalState.sadnessRating, mentalState.lonelinessRating, mentalState.anxiousnessRating,
-    	mentalState.stressRating, mentalState.angerRating, mentalState.sleepynessRating];
-    	this.state.recordOfMentalStates = this.state.recordOfMentalStates.concat([temp]);
+    	var temp = [mentalState.sadnessRating, mentalState.lonelinessRating, mentalState.anxiousnessRating, mentalState.stressRating, mentalState.angerRating, mentalState.sleepynessRating];
+        if (this.state.recordOfMentalStates.length > 4) // Only hold on to the top 5...
+            {
+                this.state.recordOfMentalStates.shift(); // Remove the oldest mental state.
+            }
+        
+    	this.state.recordOfMentalStates.push(temp);
     	console.log(this.state.recordOfMentalStates);
     	console.log("Current mental state recorded.");
     }
