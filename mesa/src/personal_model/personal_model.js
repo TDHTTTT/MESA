@@ -25,7 +25,8 @@ class PersonalModel {
         this.activity = LEVELS.UNKNOWN;
         this.weather = STATE.UNKNOWN;
         this.time_of_day = TSTATE.UNKNOWN;
-        this.dependencies = []
+        this.dependencies = [];
+        this.taskRecords = [];
     }
 
     __updateState(mc_answers) {
@@ -100,6 +101,15 @@ class PersonalModel {
         this.__updateContext();
     }
 
+    updateTaskRecords(taskname, reaction) {
+        this.taskRecords.push({name: taskname, reaction: reaction});
+        console.log(this.taskRecords);
+    }
+    
+    getTaskRecords() {
+        return this.taskRecords;
+    }
+    
     getState() {
         return this.state;
     }

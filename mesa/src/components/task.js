@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Alert } from 'react-native';
 import { Event } from './event_component';
+import { personalModel } from '../personal_model/personal_model';
 
 export class Task extends Component {
     completeTask() {
@@ -15,12 +16,12 @@ export class Task extends Component {
           },
           {
             text: 'No',
-            onPress: () => this._personalModelUpdate(false),
+            onPress: () => this._recordTask(false),
             style: 'cancel',
           },
           {
             text: 'Yes',
-            onPress: () => this._personalModelUpdate(true),
+            onPress: () => this._recordTask(true),
           },
         ],
         {cancelable: false},
@@ -28,16 +29,10 @@ export class Task extends Component {
     }
 
 
-    _personalModelUpdate(positiveReaction) {
-      return positiveReaction; // get rid of this later.
-    // <-----Temporary pseudo code----->
-    // result = new dictionary
-    // for every label in task.labels: // not sure how to retrieve the task's labels.
-    //     if (positiveReaction == true):
-    //         result[label] = 0.1; // not sure how this score will be determined.
-    //     else:
-    //         result[label] = -0.1;
-    //personalModel.updateState(result);
+    _recordTask(reaction) {
+        console.log("HEREEEE: ", this.props.task.name);
+        personalModel.updateTaskRecords(this.props.task.name, reaction);
+        return reaction;
     }
 
     viewDescription() {
@@ -54,18 +49,15 @@ export class Task extends Component {
     render() {
         return (
           <View>
-          <View style={styles.taskitem}>
-            <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-              <TouchableOpacity onPress={ () => { this.viewDescription() } }>
-                <Text>{this.props.task.name}</Text>
-              </TouchableOpacity>
-              <Event event={this.props.task.event_data} />
-            </View>
-
-          </View>
-
-          
-            <Button onPress={() => { this.completeTask() }} title="Complete Task" color="#ffd200" accessibilityLabel="Click here to complete the task."/>
+              <View style={styles.taskitem}>
+                <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+                  <TouchableOpacity onPress={ () => { this.viewDescription() } }>
+                    <Text>{this.props.task.name}</Text>
+                  </TouchableOpacity>
+                  <Event event={this.props.task.event_data} />
+                </View>
+              </View>
+              <Button onPress={() => { this.completeTask() }} title="Complete Task" color="#ffd200" accessibilityLabel="Click here to complete the task."/>
           </View>
         );
     }

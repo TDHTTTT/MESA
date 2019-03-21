@@ -178,7 +178,7 @@ export class MoodSurvey extends Component {
                         color="#0064a4"
                         accessibilityLabel="Hide the modal."
                     />
-                    </View>
+                </View>
             </Modal>
         )
     }
