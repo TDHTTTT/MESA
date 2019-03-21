@@ -30,9 +30,7 @@ export class Task extends Component {
 
 
     _recordTask(reaction) {
-        console.log("HEREEEE: ", this.props.task.name);
         personalModel.updateTaskRecords(this.props.task.name, reaction);
-        return reaction;
     }
 
     viewDescription() {

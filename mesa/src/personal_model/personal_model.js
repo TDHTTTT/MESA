@@ -102,8 +102,8 @@ class PersonalModel {
     }
 
     updateTaskRecords(taskname, reaction) {
+        console.log("Adding to our record of task ratings...");
         this.taskRecords.push({name: taskname, reaction: reaction});
-        console.log(this.taskRecords);
     }
     
     getTaskRecords() {
