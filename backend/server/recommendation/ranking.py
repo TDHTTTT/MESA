@@ -1,9 +1,11 @@
+"""Performs personalization based on personal model to the general list of tasks."""
 import logging
 import numpy as np
 
 logger = logging.getLogger(__name__)
 
 def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
+    """Returns ranked list of tasks based on context and personal model."""
     # output needs be of the form of [{"name" : "", "description:":"",event_data:{}}]
     tasks = {}
     
@@ -30,6 +32,7 @@ def rank_tasks(probabilites, context, number_of_tasks, tContext) -> list:
     return _dropProb(tasks)[:number_of_tasks]
 
 def _dropProb(tasks):
+    """Removes a problematic "prob" field"""
     res = []
     for t in tasks:
         res.append({k:t[k] for k in t if k!="prob"})

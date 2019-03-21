@@ -1,3 +1,4 @@
+"""Provides convenience functions for date conversion"""
 import datetime
 import dateutil.parser
 

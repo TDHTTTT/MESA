@@ -1,3 +1,4 @@
+"""Scrapes ARC calendar for classes"""
 from bs4 import BeautifulSoup
 import datetime
 from collections import OrderedDict

@@ -1,3 +1,4 @@
+"""Scrapes websites and enters collected data into the database"""
 import datetime
 from collections import OrderedDict
 import logging

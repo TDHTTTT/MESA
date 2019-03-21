@@ -1,3 +1,4 @@
+"""Initializes machine learning model and trains it on collected training data."""
 from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import json
