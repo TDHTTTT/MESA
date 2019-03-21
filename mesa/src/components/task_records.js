@@ -19,32 +19,37 @@ export class TaskRecords extends Component {
         this.setState({ modalVisibilityToggle: !this.state.modalVisibilityToggle });
     }
 
-    render
+    renderRecords()
+        {
+            records = [];
+            personalModel.taskRecords.forEach(function(tr, i){
+                var thumbs;
+                var color;
+                if (tr.reaction == true)
+                    {
+                        thumbs = "thumbs-up";
+                        color = "#0064a4";
+                    }
+                else
+                    {
+                        thumbs = "thumbs-down";
+                        color = "#bc0d0d";
+                    }
+              records.push(
+                <View key={i} style={{flexDirection: 'row'}}>
+                  <Text>{tr.name}</Text>
+                  <Icon
+                    name={thumbs}
+                  type='font-awesome'
+                  color={color}
+                  />
+                </View>);
+            });
+            return records;
+        }
+                  
+                                              
     render(){
-        var records = [];
-        personalModel.taskRecords.forEach(function(tr, i){
-            var thumbs;
-            var color;
-            if (tr.reaction == true)
-                {
-                    thumbs = "thumbs-up";
-                    color = "#0064a4";
-                }
-            else
-                {
-                    thumbs = "thumbs-down";
-                    color = "#bc0d0d";
-                }
-          records.push(
-            <View key={i} style={{flexDirection: 'row'}}>
-              <Text>{tr.name}</Text>
-              <Icon
-                name={thumbs}
-              type='font-awesome'
-              color={color}
-              />
-            </View>);
-        });
         return (
             <View>
                 <TouchableOpacity onPress={() => { this.toggleModalVisibility() }}>
@@ -54,7 +59,7 @@ export class TaskRecords extends Component {
                     <View style={ { flex: 1, justifyContent: "center", alignItems: "center" } }>
                         <Text style={{fontSize: 30, fontWeight: "bold", textDecorationLine: "underline", color: "#0064a4"}} >Past Task Ratings</Text>
                         <ScrollView style={{ marginBottom: 60, alignSelf: 'stretch' }} contentContainerStyle={{ flexGrow: 1 }}> 
-                            {records}
+                            {this.renderRecords()}
                         </ScrollView>
                         <Button
                             onPress={() => { this.toggleModalVisibility() }}
