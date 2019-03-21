@@ -17,6 +17,7 @@ export class TaskList extends Component {
         personalModel.register(this);
     }
 
+    
     update() {
         this.fetchDataFromServer();
     }
