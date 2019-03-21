@@ -1,3 +1,4 @@
+"""Schedules web_scraper to run periodically"""
 from apscheduler.schedulers.background import BackgroundScheduler
 from data_collection.web_scraper import eventsToDb
 

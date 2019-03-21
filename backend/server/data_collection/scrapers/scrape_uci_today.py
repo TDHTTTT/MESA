@@ -1,3 +1,4 @@
+"""Scrapes data from UCI today website"""
 from bs4 import BeautifulSoup
 import time
 from collections import OrderedDict

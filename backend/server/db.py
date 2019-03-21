@@ -1,4 +1,11 @@
-"""Based on tutorial file in http://flask.pocoo.org/docs/1.0/tutorial/database/"""
+"""
+Expose Flask builtin SQLite database interface.
+
+Provides utilities to open and close a connection, initialize the database
+based on Flask params, and register a command to initialize the database.
+
+Based on tutorial file in http://flask.pocoo.org/docs/1.0/tutorial/database/
+"""
 import sqlite3
 
 import click
@@ -6,7 +13,12 @@ from flask import current_app, g, Flask
 from flask.cli import with_appcontext
 
 def get_db() -> sqlite3.Connection:
-    """Returns a configured connection to the database"""
+    """
+    Returns a configured connection to the database.
+
+    If there is already an open connection for the instance running, 
+    just return that. 
+    """
     if 'db' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE'],
@@ -26,7 +38,10 @@ def close_db(e=None):
 
 
 def init_db():
-    """Initialize database"""
+    """
+    Initialize database schema using local schema file.
+    WARNING: DUMPS OLD DATABASE!
+    """
     db = get_db()
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
@@ -35,12 +50,13 @@ def init_db():
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
-    """Clear existing data and create new tables"""
+    """Packages init_db as a Flask command to run as 'flask init-db' """
     init_db()
     click.echo("Initialized the database")
 
 
 def db_init_app(app: Flask):
+    """Closes db connections upon shutdown and registers init-db command"""
     # Register the database shutdown function
     app.teardown_appcontext(close_db)
 

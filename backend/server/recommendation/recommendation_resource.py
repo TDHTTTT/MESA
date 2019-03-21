@@ -15,7 +15,7 @@ CLASSIFIER = None
 
 def initModel() -> MLClassifier:
     """
-    Trains model based on training data.
+    Trains model. 
     If model has already been trained, do nothing.
     """
     global CLASSIFIER

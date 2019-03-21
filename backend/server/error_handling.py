@@ -1,7 +1,10 @@
+"""Define basic handler for catching invalid arguments"""
 from flask import jsonify, app
 
 
 class InvalidArguments(Exception):
+    """General handler exportable as dict"""
+
     status_code = 400
 
     def __init__(self, message, status_code=None, payload=None):

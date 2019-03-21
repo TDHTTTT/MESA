@@ -1,5 +1,20 @@
 """
-Main flask script. Defines the '/recommendation/' route and parses input. 
+Flask server configuration and creation script.
+
+Creates Flask app instance and defines HTTP routes, logging, 
+setup functions to run, and registers the database.
+
+Defines three routes: 
+    "/recommendation/": 
+        POST route, takes context and state objects 
+        to return ranked recommendation list
+
+    "/weather/": 
+        GET route, returns weather status as short string
+
+    "/outside/": 
+        GET route, returns whether it's okay to go outside i.e. whether 
+        it's raining or snowing
 """
 import os
 from logging.config import dictConfig
@@ -15,6 +30,7 @@ from error_handling import InvalidArguments
 import db
 
 # Configure logging
+# Logging output sent to console with the module prepended to the message
 dictConfig({
     "version": 1,
     "formatters": {"default": {
@@ -35,8 +51,12 @@ dictConfig({
 
 def create_app() -> Flask:
     """
-    Create and configure the app. When run using 'flask run' from the terminal, this 
-    function will be called to get the Flask application instance.
+    Initialize actual app instance.
+
+    Configure database, register functions to run before serving requests,
+    define routes, and register database init command.
+
+    NOTE: command "flask run" runs off of this function.
     """
 
     app = Flask(__name__, instance_relative_config=True)
@@ -58,7 +78,7 @@ def create_app() -> Flask:
         response.status_code = error.status_code
         return response
 
-    # Define the route we'll use to serve recommendation requests
+    # Define HTTP routes
     @app.route("/recommendation/", methods=['POST'])
     def recommendation() -> "JSON List Response":
         """
@@ -106,7 +126,6 @@ def create_app() -> Flask:
         # Return json of recommendation list
         return jsonify(responseRec)
 
-    # Define weather API routes
     @app.route("/weather/", methods=["GET"])
     def weather() -> "JSON String Response":
         """

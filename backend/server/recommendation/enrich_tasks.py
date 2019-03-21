@@ -1,3 +1,4 @@
+"""Inserts database events into appropriate recommended tasks"""
 from data_collection.web_scraper import get_upcoming_events
 
 def enrichTasks(list_of_tasks):
